@@ -1,53 +1,124 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Formularios</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mis Formularios</title>
 
 <style>
+
 body{
-  font-family:Arial;
-  background:#f5f5f5;
-  padding:40px;
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0b1d3a;
+    color:#c9ced6;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    padding:40px 20px;
 }
 
 h1{
-  text-align:center;
+    text-align:center;
+    margin-bottom:40px;
+    color:#e4e7eb;
+    font-size:32px;
 }
 
 .menu{
-  max-width:500px;
-  margin:auto;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
 }
 
-a{
-  display:block;
-  background:white;
-  padding:20px;
-  margin-bottom:15px;
-  border-radius:12px;
-  text-decoration:none;
-  color:#222;
-  box-shadow:0 0 10px rgba(0,0,0,0.08);
+.item{
+    background:#13294b;
+    padding:20px;
+    border-radius:14px;
+    text-decoration:none;
+    color:#c9ced6;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    transition:0.2s;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
+
+.item:hover{
+    background:#1b3a67;
+    transform:translateY(-2px);
+}
+
+.left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:18px;
+}
+
+.icon{
+    font-size:22px;
+}
+
+.arrow{
+    font-size:22px;
+    color:#9aa3af;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>Mis Formularios</h1>
+<div class="container">
 
-<div class="menu">
+    <h1>Mis Formularios</h1>
 
-<a href="formulario1.html">
-Formulario 1
-</a>
+    <div class="menu">
 
-<a href="formulario2.html">
-Formulario 2
-</a>
+        <a class="item" href="formularios/anamnesis.html">
+
+            <div class="left">
+                <span class="icon">📋</span>
+                <span>Anamnesis</span>
+            </div>
+
+            <span class="arrow">➜</span>
+
+        </a>
+
+        <a class="item" href="formularios/riesgo.html">
+
+            <div class="left">
+                <span class="icon">🦷</span>
+                <span>Riesgo Cariogénico</span>
+            </div>
+
+            <span class="arrow">➜</span>
+
+        </a>
+
+        <a class="item" href="formularios/consentimiento.html">
+
+            <div class="left">
+                <span class="icon">📄</span>
+                <span>Consentimiento</span>
+            </div>
+
+            <span class="arrow">➜</span>
+
+        </a>
+
+    </div>
 
 </div>
 
 </body>
 </html>
+```
