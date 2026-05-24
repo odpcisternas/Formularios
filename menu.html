@@ -1,6 +1,7 @@
 ```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,28 +18,30 @@ body{
 }
 
 .container{
-    max-width:700px;
+    max-width:800px;
     margin:auto;
     padding:40px 20px;
 }
 
 h1{
     text-align:center;
+    color:#d7dbe2;
     margin-bottom:40px;
-    color:#e4e7eb;
-    font-size:32px;
+    font-size:34px;
+    line-height:1.3;
 }
 
 .menu{
     display:flex;
     flex-direction:column;
-    gap:18px;
+    gap:20px;
 }
 
 .item{
     background:#13294b;
-    padding:20px;
-    border-radius:14px;
+    border-radius:16px;
+    padding:22px;
+
     text-decoration:none;
     color:#c9ced6;
 
@@ -47,27 +50,28 @@ h1{
     align-items:center;
 
     transition:0.2s;
-    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.25);
 }
 
 .item:hover{
-    background:#1b3a67;
+    background:#1a3a68;
     transform:translateY(-2px);
 }
 
 .left{
     display:flex;
     align-items:center;
-    gap:14px;
-    font-size:18px;
+    gap:16px;
+    font-size:20px;
 }
 
 .icon{
-    font-size:22px;
+    font-size:26px;
 }
 
 .arrow{
-    font-size:22px;
+    font-size:24px;
     color:#9aa3af;
 }
 
@@ -78,37 +82,18 @@ h1{
 
 <div class="container">
 
-    <h1>Formularios ODP Dra. María José Cisternas</h1>
+    <h1>
+        Formularios ODP<br>
+        Dra. María José Cisternas
+    </h1>
 
     <div class="menu">
 
-        <a class="item" href="formularios/cero_evaluacion.html">
+        <a class="item" href="cero_evaluacion.html">
 
             <div class="left">
                 <span class="icon">📋</span>
                 <span>Evaluación</span>
-            </div>
-
-            <span class="arrow">➜</span>
-
-        </a>
-
-        <a class="item" href="formularios/riesgo.html">
-
-            <div class="left">
-                <span class="icon">🦷</span>
-                <span>Riesgo Cariogénico</span>
-            </div>
-
-            <span class="arrow">➜</span>
-
-        </a>
-
-        <a class="item" href="formularios/consentimiento.html">
-
-            <div class="left">
-                <span class="icon">📄</span>
-                <span>Consentimiento</span>
             </div>
 
             <span class="arrow">➜</span>
