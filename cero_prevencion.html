@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CERO — Plan Preventivo</title>
+<style>
+:root{--bg:#f5f3ef;--surface:#fff;--border:#e2ded8;--text:#1a1816;--muted:#6b6560;--accent:#2563a8;--al:#dbeafe;--low:#166534;--lbg:#dcfce7;--high:#991b1b;--hbg:#fee2e2;--r:8px;--rl:12px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;padding:2rem}
+.wrap{max-width:820px;margin:0 auto}
+.page-header{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.page-header h1{font-size:20px;font-weight:700;color:var(--accent);margin-bottom:3px;font-family:Georgia,serif}
+.page-header p{font-size:12px;color:var(--muted)}
+.actions{display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap}
+.btn{padding:8px 16px;border-radius:var(--r);font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:all .15s}
+.btn:hover{background:var(--bg)}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:#1d4ed8}
+.sec{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.2rem;margin-bottom:1rem}
+.sec-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:.9rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f{display:flex;flex-direction:column;gap:3px;margin-bottom:2px}
+.f label{font-size:11px;color:var(--muted)}
+.f input,.f select,.f textarea{border:1px solid var(--border);border-radius:var(--r);padding:6px 9px;font-size:13px;background:var(--bg);color:var(--text);width:100%}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--al)}
+.f textarea{resize:vertical;min-height:52px}
+.divider{height:1px;background:var(--border);margin:12px 0}
+/* cepillado grid */
+.cep-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:center;margin-top:10px}
+.cep-label{font-size:13px;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.cep-label input[type=checkbox]{accent-color:var(--accent);cursor:pointer}
+.cep-input{border:1px solid var(--border);border-radius:var(--r);padding:5px 9px;font-size:13px;background:var(--bg);color:var(--text);width:100%}
+.cep-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--al)}
+/* dieta puntos */
+.dieta-punto{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;margin-bottom:6px}
+.dieta-punto span{font-size:13px;color:var(--muted);font-weight:700;white-space:nowrap}
+/* hábitos tabla */
+.hab-table{width:100%;border-collapse:collapse;margin-top:4px}
+.hab-table th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:6px 8px;border-bottom:2px solid var(--border);text-align:left;background:var(--bg)}
+.hab-table td{padding:6px 8px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top}
+.hab-table tr:last-child td{border-bottom:none}
+.hab-table td:first-child{white-space:nowrap;display:flex;align-items:center;gap:6px}
+.hab-table td:first-child input[type=checkbox]{accent-color:var(--accent);cursor:pointer;flex-shrink:0}
+.hab-table td input[type=text]{border:1px solid var(--border);border-radius:var(--r);padding:4px 8px;font-size:12px;background:var(--bg);color:var(--text);width:100%}
+.hab-table td input[type=text]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--al)}
+/* signatura */
+.sign-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.sign-box{border-top:1px solid #aaa;padding-top:6px;text-align:center}
+.sign-box p{font-size:11px;color:var(--muted);margin-top:4px}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--text);color:#fff;padding:10px 18px;border-radius:var(--r);font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99}
+.toast.show{opacity:1}
+@media(max-width:600px){.g2,.g3{grid-template-columns:1fr}.sign-row{grid-template-columns:1fr}.cep-grid{grid-template-columns:1fr}}
+@media print{.actions{display:none}.sec{break-inside:avoid}body{padding:0;background:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="page-header">
+  <h1>Plan de Recomendaciones Preventivas</h1>
+  <p>Programa CERO · Estrategias de prevención según riesgo odontológico · Ministerio de Salud Chile</p>
+</div>
+
+<div class="actions">
+  <button class="btn btn-primary" onclick="guardar()">💾 Guardar</button>
+  <button class="btn" onclick="limpiar()">🗑 Limpiar formulario</button>
+  <button class="btn" onclick="window.print()">🖨 Imprimir</button>
+</div>
+
+<!-- DATOS DEL CONTROL -->
+<div class="sec">
+  <div class="sec-title">📋 Datos del control</div>
+  <div class="g3" style="margin-bottom:10px">
+    <div class="f"><label>Nombre del paciente</label><input id="nombre" type="text" placeholder="Apellido, Nombre"></div>
+    <div class="f"><label>Edad</label><input id="edad" type="text" placeholder="ej. 8 años"></div>
+    <div class="f"><label>Fecha de atención</label><input id="fec_atencion" type="date"></div>
+  </div>
+  <div class="g2">
+    <div class="f"><label>Riesgo determinado</label>
+      <select id="riesgo"><option value="">—</option><option>Bajo riesgo</option><option>Alto riesgo</option></select>
+    </div>
+    <div class="f"><label>Profesional</label><input id="profesional" type="text"></div>
+  </div>
+</div>
+
+<!-- 1. HIGIENE BUCAL -->
+<div class="sec">
+  <div class="sec-title">💧 1. Higiene bucal</div>
+
+  <div class="g2" style="margin-bottom:10px">
+    <div class="f">
+      <label>Tipo de cepillo indicado</label>
+      <select id="tipo_cepillo">
+        <option value="">—</option>
+        <option>Cepillo de cabeza pequeña / suave (0–3 años)</option>
+        <option>Cepillo infantil suave (3–6 años)</option>
+        <option>Cepillo adulto suave (6+ años / adolescente)</option>
+        <option>Cepillo eléctrico</option>
+        <option>Gasa / dedal de silicona (lactante sin dientes)</option>
+        <option>Otro (ver observaciones)</option>
+      </select>
+    </div>
+    <div class="f">
+      <label>Tipo de pasta indicada</label>
+      <select id="tipo_pasta">
+        <option value="">—</option>
+        <option>Pasta 1.100 ppm flúor (pasta de niños)</option>
+        <option>Pasta 1.450 ppm flúor (pasta de adulto)</option>
+        <option>Pasta 2.500 ppm flúor (Caristop Sensitive)</option>
+        <option>Pasta 5.000 ppm flúor (Caristop 5.000)</option>
+        <option>Sin pasta (sin dientes erupcionados)</option>
+        <option>Otro (ver observaciones)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-bottom:12px">
+    <div class="f">
+      <label>Dosis de pasta</label>
+      <select id="dosis_pasta">
+        <option value="">—</option>
+        <option>Grano de arroz / punta del cepillo (menor de 2 años)</option>
+        <option>Arveja (2 años o más)</option>
+        <option>No aplica (sin dientes erupcionados)</option>
+      </select>
+    </div>
+    <div class="f">
+      <label>Marca de pasta recomendada</label>
+      <input id="marca_pasta" type="text" placeholder="Nombre comercial...">
+    </div>
+  </div>
+
+  <p style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px">Momentos de cepillado indicados</p>
+  <div class="cep-grid">
+    <label class="cep-label"><input type="checkbox" id="cep_desayuno"> Después del desayuno</label>
+    <input class="cep-input" id="obs_cep_desayuno" type="text" placeholder="Indicación específica...">
+    <label class="cep-label"><input type="checkbox" id="cep_almuerzo"> Después del almuerzo</label>
+    <input class="cep-input" id="obs_cep_almuerzo" type="text" placeholder="Indicación específica...">
+    <label class="cep-label"><input type="checkbox" id="cep_noche"> Antes de acostarse</label>
+    <input class="cep-input" id="obs_cep_noche" type="text" placeholder="Indicación específica (impostergable)...">
+    <label class="cep-label"><input type="checkbox" id="cep_otro"> Otro momento</label>
+    <input class="cep-input" id="obs_cep_otro" type="text" placeholder="Especificar...">
+  </div>
+
+  <div class="f" style="margin-top:10px">
+    <label>Observaciones higiene / técnica</label>
+    <textarea id="obs_hig" placeholder="Técnica demostrada, instrumentos adicionales, acuerdos con la familia..."></textarea>
+  </div>
+</div>
+
+<!-- 2. DIETA -->
+<div class="sec">
+  <div class="sec-title">🥗 2. Dieta</div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Registra las 3 recomendaciones principales de dieta para este paciente:</p>
+
+  <div class="dieta-punto">
+    <span>1.</span>
+    <input id="dieta_1" type="text" placeholder="Recomendación de dieta...">
+  </div>
+  <div class="dieta-punto">
+    <span>2.</span>
+    <input id="dieta_2" type="text" placeholder="Recomendación de dieta...">
+  </div>
+  <div class="dieta-punto">
+    <span>3.</span>
+    <input id="dieta_3" type="text" placeholder="Recomendación de dieta...">
+  </div>
+
+  <div class="f" style="margin-top:10px">
+    <label>Observaciones adicionales de dieta</label>
+    <textarea id="obs_dieta" placeholder="Contexto familiar, alimentos específicos, acuerdos..."></textarea>
+  </div>
+</div>
+
+<!-- 3. HÁBITOS -->
+<div class="sec">
+  <div class="sec-title">⚠ 3. Malos hábitos — evaluación y recomendación</div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Marca los hábitos presentes y escribe la recomendación entregada para cada uno.</p>
+
+  <table class="hab-table">
+    <thead>
+      <tr>
+        <th style="width:220px">Hábito</th>
+        <th>Recomendación entregada</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="checkbox" id="h_suc"><label for="h_suc">Succión digital</label></td>
+        <td><input type="text" id="rec_suc" placeholder="Recomendación..."></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="h_chu"><label for="h_chu">Uso de chupete / mamadera</label></td>
+        <td><input type="text" id="rec_chu" placeholder="Recomendación..."></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="h_resp"><label for="h_resp">Respiración bucal</label></td>
+        <td><input type="text" id="rec_resp" placeholder="Recomendación..."></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="h_brux"><label for="h_brux">Bruxismo</label></td>
+        <td><input type="text" id="rec_brux" placeholder="Recomendación..."></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="h_oni"><label for="h_oni">Onicofagia</label></td>
+        <td><input type="text" id="rec_oni" placeholder="Recomendación..."></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="h_interp"><label for="h_interp">Interposición de objetos</label></td>
+        <td><input type="text" id="rec_interp" placeholder="Recomendación..."></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="h_leng"><label for="h_leng">Interposición lingual</label></td>
+        <td><input type="text" id="rec_leng" placeholder="Recomendación..."></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="h_mal"><label for="h_mal">Maloclusión</label></td>
+        <td><input type="text" id="rec_mal" placeholder="Recomendación..."></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="h_anq"><label for="h_anq">Anquiloglosia</label></td>
+        <td><input type="text" id="rec_anq" placeholder="Recomendación..."></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="h_dro"><label for="h_dro">Tabaco / alcohol / drogas</label></td>
+        <td><input type="text" id="rec_dro" placeholder="Recomendación..."></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="h_pie"><label for="h_pie">Piercing oral</label></td>
+        <td><input type="text" id="rec_pie" placeholder="Recomendación..."></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="h_otro"><label for="h_otro">Otro hábito</label></td>
+        <td><input type="text" id="rec_otro" placeholder="Especificar hábito y recomendación..."></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 4. COMPROMISOS Y FIRMAS -->
+<div class="sec">
+  <div class="sec-title">✅ 4. Compromisos y próximo control</div>
+  <div class="f" style="margin-bottom:10px">
+    <label>Compromisos acordados con el paciente y familia (máx. 3)</label>
+    <textarea id="comp" placeholder="1.&#10;2.&#10;3." style="min-height:80px"></textarea>
+  </div>
+  <div class="g2">
+    <div class="f"><label>Fecha próximo control</label><input id="prox" type="date"></div>
+    <div class="f"><label>Observaciones finales</label><input id="obs_fin" type="text" placeholder="Indicaciones adicionales..."></div>
+  </div>
+  <div class="sign-row">
+    <div class="sign-box"><br><p>Firma del/la profesional</p></div>
+    <div class="sign-box"><br><p>Firma padre / madre / cuidador</p></div>
+    <div class="sign-box"><br><p>Firma del/la paciente (si corresponde)</p></div>
+  </div>
+</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY='cero_prev_v2';
+const TF=['nombre','edad','fec_atencion','riesgo','profesional','tipo_cepillo','tipo_pasta','dosis_pasta','marca_pasta',
+  'obs_cep_desayuno','obs_cep_almuerzo','obs_cep_noche','obs_cep_otro','obs_hig',
+  'dieta_1','dieta_2','dieta_3','obs_dieta',
+  'rec_suc','rec_chu','rec_resp','rec_brux','rec_oni','rec_interp','rec_leng','rec_mal','rec_anq','rec_dro','rec_pie','rec_otro',
+  'comp','prox','obs_fin'];
+const CF=['cep_desayuno','cep_almuerzo','cep_noche','cep_otro',
+  'h_suc','h_chu','h_resp','h_brux','h_oni','h_interp','h_leng','h_mal','h_anq','h_dro','h_pie','h_otro'];
+
+function recopilar(){
+  const d={};
+  TF.forEach(id=>{const el=document.getElementById(id);if(el)d[id]=el.value});
+  CF.forEach(id=>{const el=document.getElementById(id);if(el)d[id]=el.checked});
+  return d;
+}
+function recargar(d){
+  TF.forEach(id=>{const el=document.getElementById(id);if(el)el.value=d[id]||''});
+  CF.forEach(id=>{const el=document.getElementById(id);if(el)el.checked=!!d[id]});
+}
+function guardar(){localStorage.setItem(KEY,JSON.stringify(recopilar()));toast('Guardado en este navegador ✓')}
+function limpiar(){if(!confirm('¿Limpiar todos los campos?'))return;localStorage.removeItem(KEY);location.reload()}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+try{const d=JSON.parse(localStorage.getItem(KEY));if(d)recargar(d)}catch(e){}
+</script>
+</body>
+</html>

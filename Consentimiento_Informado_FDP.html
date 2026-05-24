@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consentimiento Informado – Fluoruro de Diamino de Plata</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── VARIABLES ─────────────────────────────────────── */
+  :root {
+    --navy:   #1a3f6b;
+    --navy2:  #0d2a4a;
+    --blue:   #2c6fad;
+    --sky:    #d4e8ff;
+    --gold:   #c8973a;
+    --cream:  #fdf9f3;
+    --warm:   #fff8e8;
+    --line:   #b0c4de;
+    --text:   #1e2d3d;
+    --muted:  #5a6a7a;
+    --field:  #f7fbff;
+    --radius: 6px;
+  }
+
+  /* ── RESET ─────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: #e8ecf0;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── TOP BAR ────────────────────────────────────────── */
+  .topbar {
+    background: var(--navy2);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .topbar-title {
+    font-family: 'Libre Baskerville', serif;
+    color: #fff;
+    font-size: 15px;
+    letter-spacing: 0.03em;
+  }
+  .topbar-title span { color: var(--gold); }
+
+  .btn-print {
+    background: var(--gold);
+    color: #fff;
+    border: none;
+    padding: 10px 28px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-print:hover { background: #b5821f; }
+  .btn-print:active { transform: scale(0.97); }
+  .btn-print svg { width: 16px; height: 16px; fill: #fff; }
+
+  /* ── PAGE WRAPPER ───────────────────────────────────── */
+  .page-wrap {
+    max-width: 860px;
+    margin: 32px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.13);
+    overflow: hidden;
+    padding-bottom: 48px;
+  }
+
+  /* ── DOCUMENT HEADER ────────────────────────────────── */
+  .doc-header {
+    background: var(--navy);
+    padding: 32px 48px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .doc-header::after {
+    content: '';
+    position: absolute;
+    left: -20px; bottom: -60px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .doc-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    color: #fff;
+    font-size: 26px;
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+  }
+  .doc-header h2 {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--sky);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .header-bar {
+    width: 48px; height: 3px;
+    background: var(--gold);
+    margin: 14px 0;
+    border-radius: 2px;
+  }
+
+  /* ── CONTENT AREA ───────────────────────────────────── */
+  .content { padding: 36px 48px; }
+
+  /* ── SECTION CARDS ──────────────────────────────────── */
+  .card {
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .card-head {
+    background: var(--navy);
+    color: #fff;
+    padding: 10px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-head.gold { background: linear-gradient(90deg, #8b6019 0%, #c8973a 100%); }
+  .card-body { padding: 20px 20px 16px; background: var(--field); }
+  .card-body.warm { background: var(--warm); }
+
+  /* ── FIELD GROUPS ───────────────────────────────────── */
+  .field-row { display: grid; gap: 16px; margin-bottom: 14px; }
+  .field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+  .field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .field-row.cols-1-2 { grid-template-columns: 1fr 2fr; }
+
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--navy);
+  }
+  .field input, .field select, .field textarea {
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+    width: 100%;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(44,111,173,0.12);
+  }
+  .field textarea { resize: vertical; min-height: 60px; }
+
+  /* ── INFO SECTIONS ───────────────────────────────────── */
+  .info-section { margin-bottom: 22px; }
+  .info-section h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 14px;
+    color: var(--navy);
+    border-left: 3px solid var(--gold);
+    padding-left: 10px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .info-section p {
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.75;
+    text-align: justify;
+  }
+  .info-section ul { list-style: none; padding: 0; }
+  .info-section ul li {
+    font-size: 13.5px;
+    line-height: 1.75;
+    padding: 4px 0 4px 20px;
+    position: relative;
+    text-align: justify;
+    color: var(--text);
+  }
+  .info-section ul li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--gold);
+    font-size: 12px;
+    top: 6px;
+  }
+  .info-section ul li strong { color: var(--navy); }
+
+  /* ── CONSENT CHECKBOXES ─────────────────────────────── */
+  .consent-box {
+    background: var(--cream);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 24px;
+  }
+  .consent-box h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 15px;
+    color: var(--navy);
+    margin-bottom: 14px;
+    border-bottom: 2px solid var(--sky);
+    padding-bottom: 8px;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8eef4;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-item input[type="checkbox"] {
+    width: 18px; height: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: var(--navy);
+    cursor: pointer;
+  }
+  .check-item label {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .check-item label strong { color: var(--navy); }
+
+  /* ── SIGNATURE AREA ─────────────────────────────────── */
+  .sig-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 20px;
+  }
+  .sig-block { display: flex; flex-direction: column; gap: 8px; }
+  .sig-block label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--navy);
+  }
+
+
+  /* ── LEGAL NOTE ─────────────────────────────────────── */
+  .legal-note {
+    background: #f2f5f8;
+    border: 1px solid #d0dae4;
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-top: 24px;
+  }
+  .legal-note p {
+    font-size: 11.5px;
+    line-height: 1.7;
+    color: var(--muted);
+    text-align: justify;
+  }
+  .legal-note strong { color: var(--navy); }
+
+  /* ── DIVIDER ────────────────────────────────────────── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line), transparent);
+    margin: 28px 0;
+  }
+
+  /* ── VALIDATION ─────────────────────────────────────── */
+  .required-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .required-note span { color: #c0392b; }
+
+  input.invalid, select.invalid, textarea.invalid {
+    border-color: #c0392b !important;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.10) !important;
+  }
+
+  /* ── PRINT STYLES ───────────────────────────────────── */
+  @media print {
+    body { background: #fff; }
+    .topbar { display: none; }
+    .page-wrap {
+      max-width: 100%;
+      margin: 0;
+      box-shadow: none;
+      border-radius: 0;
+      padding-bottom: 0;
+    }
+    .content { padding: 20px 32px; }
+    .doc-header { padding: 24px 32px 20px; }
+    .btn-print { display: none; }
+
+    .card-body, .card-body.warm { background: #fff !important; }
+    .consent-box { background: #fff !important; }
+    .field input, .field select, .field textarea {
+      border: none;
+      border-bottom: 1px solid #aaa;
+      border-radius: 0;
+      background: transparent;
+      padding: 2px 0;
+      font-size: 13px;
+    }
+    .field select { -webkit-appearance: none; }
+
+    .check-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border: 1.5px solid #555;
+      border-radius: 2px;
+      position: relative;
+      margin-top: 3px;
+    }
+    .check-item input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: -3px; left: 1px;
+      font-size: 12px;
+      color: #000;
+    }
+
+    .sig-canvas-wrap {
+      border: none;
+      border-bottom: 1px solid #aaa;
+      border-radius: 0;
+      background: transparent;
+    }
+    .sig-canvas-wrap .sig-placeholder { display: none; }
+    .clear-sig { display: none; }
+    .legal-note { background: #f8f8f8; }
+    .info-section, .consent-box { page-break-inside: avoid; }
+    a { color: inherit; text-decoration: none; }
+
+    @page {
+      margin: 18mm 16mm;
+      size: A4;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-title">
+    Odontología Preventiva &nbsp;/&nbsp; <span>Consentimiento Informado · FDP/SDF</span>
+  </div>
+  <button class="btn-print" onclick="handlePrint()">
+    <svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+    Imprimir / Guardar PDF
+  </button>
+</div>
+
+<!-- DOCUMENT -->
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <h1>Consentimiento Informado</h1>
+    <div class="header-bar"></div>
+    <h2>Aplicación de Fluoruro de Diamino de Plata &nbsp;·&nbsp; FDP / SDF</h2>
+  </div>
+
+  <div class="content">
+    <p class="required-note">Los campos marcados con <span>*</span> son obligatorios antes de imprimir.</p>
+
+    <!-- ESTABLECIMIENTO -->
+    <div class="card">
+      <div class="card-head">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        Datos del Establecimiento / Consultorio
+      </div>
+      <div class="card-body">
+        <div class="field-row cols-1-2">
+          <div class="field">
+            <label>Ciudad <span style="color:#c0392b">*</span></label>
+            <input type="text" id="ciudad" placeholder="Ej: Santiago" required>
+          </div>
+          <div class="field">
+            <label>Nombre del Consultorio / Clínica <span style="color:#c0392b">*</span></label>
+            <input type="text" id="consultorio" placeholder="Nombre completo del establecimiento" required>
+          </div>
+        </div>
+        <div class="field-row" style="grid-template-columns:1fr;">
+          <div class="field">
+            <label>Fecha <span style="color:#c0392b">*</span></label>
+            <input type="date" id="fecha" required style="max-width:220px;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PACIENTE -->
+    <div class="card">
+      <div class="card-head">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+        Datos del Paciente
+      </div>
+      <div class="card-body">
+        <div class="field-row">
+          <div class="field">
+            <label>Nombre completo del paciente <span style="color:#c0392b">*</span></label>
+            <input type="text" id="paciente_nombre" placeholder="Apellidos y nombres" required>
+          </div>
+        </div>
+        <div class="field-row cols-3">
+          <div class="field">
+            <label>Fecha de nacimiento <span style="color:#c0392b">*</span></label>
+            <input type="date" id="paciente_nac" required>
+          </div>
+          <div class="field">
+            <label>Edad</label>
+            <input type="text" id="paciente_edad" placeholder="Años / meses" readonly style="background:#f0f4f8; cursor:default;">
+          </div>
+          <div class="field">
+            <label>Sexo</label>
+            <select id="paciente_sexo">
+              <option value="">— Seleccionar —</option>
+              <option>Masculino</option>
+              <option>Femenino</option>
+              <option>Otro</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field">
+            <label>Diente(s) a tratar</label>
+            <input type="text" id="dientes" placeholder="Ej: 5.1, 6.2, 7.4 (nomenclatura FDI)">
+          </div>
+          <div class="field">
+            <label>Diagnóstico / Indicación</label>
+            <input type="text" id="diagnostico" placeholder="Ej: Caries activa, hipersensibilidad">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPRESENTANTE -->
+    <div class="card">
+      <div class="card-head gold">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        Datos del Padre / Madre / Representante Legal
+      </div>
+      <div class="card-body warm">
+        <div class="field-row">
+          <div class="field">
+            <label>Nombre completo <span style="color:#c0392b">*</span></label>
+            <input type="text" id="rep_nombre" placeholder="Apellidos y nombres completos" required>
+          </div>
+        </div>
+        <div class="field-row cols-3">
+          <div class="field">
+            <label>Tipo de documento <span style="color:#c0392b">*</span></label>
+            <select id="rep_tipo_doc" required>
+              <option value="">— Tipo —</option>
+              <option>Cédula de Identidad</option>
+              <option>Pasaporte</option>
+              <option>DNI</option>
+              <option>RUT</option>
+              <option>CURP</option>
+              <option>Carnet de extranjería</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>No. de identificación <span style="color:#c0392b">*</span></label>
+            <input type="text" id="rep_doc" placeholder="Número de documento" required>
+          </div>
+          <div class="field">
+            <label>Parentesco <span style="color:#c0392b">*</span></label>
+            <select id="rep_parentesco" required>
+              <option value="">— Seleccionar —</option>
+              <option>Padre</option>
+              <option>Madre</option>
+              <option>Tutor/a legal</option>
+              <option>Abuelo/a</option>
+              <option>Hermano/a mayor</option>
+              <option>Otro representante legal</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field">
+            <label>Teléfono de contacto <span style="color:#c0392b">*</span></label>
+            <input type="tel" id="rep_tel" placeholder="Número celular o fijo" required>
+          </div>
+          <div class="field">
+            <label>Correo electrónico</label>
+            <input type="email" id="rep_email" placeholder="correo@ejemplo.com">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Dirección de residencia</label>
+            <input type="text" id="rep_dir" placeholder="Calle, número, ciudad, estado/provincia">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- INFORMACIÓN CLÍNICA -->
+    <div class="info-section">
+      <h3>1. ¿Qué es el Fluoruro de Diamino de Plata (FDP / SDF)?</h3>
+      <p>El Fluoruro de Diamino de Plata (FDP), también conocido como Silver Diamine Fluoride (SDF), es un compuesto líquido que combina plata, flúor y amonio. Es utilizado en odontología pediátrica y preventiva para detener el avance de la caries dental, prevenir nuevas lesiones y reducir la sensibilidad dentaria, sin necesidad de procedimientos invasivos en la mayoría de los casos.</p>
+    </div>
+
+    <div class="info-section">
+      <h3>2. Objetivo del tratamiento</h3>
+      <ul>
+        <li>Detener la progresión de lesiones de caries activas.</li>
+        <li>Prevenir la aparición de nuevas caries en dientes en riesgo.</li>
+        <li>Evitar o posponer procedimientos restaurativos bajo anestesia en pacientes pediátricos o de alto riesgo.</li>
+        <li>Favorecer una buena adaptación del paciente a la atención dental, al ser un procedimiento no invasivo, fácil y rápido.</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h3>3. Procedimiento</h3>
+      <p>El tratamiento es simple y no invasivo. El odontólogo aislará el diente o dientes a tratar, protegerá los tejidos blandos circundantes y aplicará una pequeña cantidad del líquido de FDP directamente sobre la superficie afectada con un microbrush. El procedimiento dura aproximadamente de 1 a 3 minutos por pieza dental.</p>
+    </div>
+
+    <div class="info-section">
+      <h3>4. Beneficios</h3>
+      <ul>
+        <li>Procedimiento rápido, indoloro y sin necesidad de anestesia en la mayoría de los casos.</li>
+        <li>Alta eficacia clínica comprobada para arrestar caries en dentición primaria y permanente.</li>
+        <li>Costo accesible y mínimamente invasivo.</li>
+        <li>Reduce la necesidad de sedación o anestesia general en pacientes pediátricos no colaboradores.</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h3>5. Efectos adversos y consideraciones importantes</h3>
+      <ul>
+        <li><strong>TINCIÓN NEGRA PERMANENTE:</strong> El principal efecto adverso es la decoloración marrón oscura o negra de la caries tratada y, en ocasiones, del tejido sano adyacente. Esta tinción es permanente y no desaparece con el cepillado, siendo un resultado esperado del tratamiento en dientes temporales.</li>
+        <li>Puede producir una leve tinción transitoria de las encías o tejidos blandos que generalmente desaparece en pocos días.</li>
+        <li>Riesgo de tinción permanente en superficies de trabajo (ropa, muebles, pisos): el producto debe manipularse con precaución.</li>
+        <li>En casos de <strong>alergia conocida a la plata</strong> u otros metales pesados, el tratamiento está contraindicado. Notifique a su odontólogo antes de la aplicación.</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h3>6. Alternativas al tratamiento</h3>
+      <p>Las alternativas incluyen: restauraciones convencionales (resina, amalgama, ionómero de vidrio), tratamientos pulpares, extracción dental, o no realizar ningún tratamiento (con el consecuente riesgo de progresión de caries, infección y dolor).</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- DECLARACIÓN DE CONSENTIMIENTO -->
+    <div class="consent-box">
+      <h3>7. Declaración de Consentimiento</h3>
+
+      <!-- Párrafo principal -->
+      <div style="background:#fff; border-left:4px solid var(--navy); border-radius:0 4px 4px 0; padding:14px 18px; margin-bottom:16px; box-shadow:0 1px 4px rgba(26,63,107,0.07);">
+        <p style="font-size:13.5px; line-height:1.85; color:var(--text); text-align:justify;">
+          Declaro que he sido informada de manera clara, comprensible y suficiente por el profesional tratante acerca del procedimiento consistente en la <strong>aplicación de Fluoruro Diamino de Plata (FDP)</strong>.
+        </p>
+      </div>
+
+      <!-- Sublínea -->
+      <p style="font-size:13px; font-weight:700; color:var(--navy); letter-spacing:0.04em; text-transform:uppercase; margin-bottom:10px; padding-left:4px;">Declaro que:</p>
+
+      <!-- Ítems declarativos -->
+      <div style="display:flex; flex-direction:column; gap:0;">
+
+        <div style="display:flex; align-items:flex-start; gap:14px; padding:12px 16px; background:#fff; border:1px solid #dce8f4; border-bottom:none; border-radius:4px 4px 0 0;">
+          <div style="flex-shrink:0; width:28px; height:28px; background:var(--navy); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-top:1px;">
+            <span style="color:#fff; font-size:13px; font-weight:700;">1</span>
+          </div>
+          <p style="font-size:13.5px; line-height:1.75; color:var(--text); text-align:justify; margin:0; padding-top:3px;">
+            He tenido la oportunidad de realizar preguntas y todas han sido respondidas satisfactoriamente.
+          </p>
+        </div>
+
+        <div style="display:flex; align-items:flex-start; gap:14px; padding:12px 16px; background:#f7fbff; border:1px solid #dce8f4; border-bottom:none;">
+          <div style="flex-shrink:0; width:28px; height:28px; background:var(--navy); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-top:1px;">
+            <span style="color:#fff; font-size:13px; font-weight:700;">2</span>
+          </div>
+          <p style="font-size:13.5px; line-height:1.75; color:var(--text); text-align:justify; margin:0; padding-top:3px;">
+            Comprendo los beneficios, riesgos y consecuencias del tratamiento.
+          </p>
+        </div>
+
+        <div style="display:flex; align-items:flex-start; gap:14px; padding:12px 16px; background:#fff; border:1px solid #dce8f4; border-radius:0 0 4px 4px;">
+          <div style="flex-shrink:0; width:28px; height:28px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-top:1px;">
+            <span style="color:#fff; font-size:13px; font-weight:700;">3</span>
+          </div>
+          <p style="font-size:13.5px; line-height:1.75; color:var(--text); text-align:justify; margin:0; padding-top:3px;">
+            <strong>Autorizo voluntariamente</strong> la aplicación de Fluoruro Diamino de Plata (FDP) en la paciente antes mencionada.
+          </p>
+        </div>
+
+      </div>
+
+      <div style="margin-top:18px;">
+        <div class="field">
+          <label>Observaciones / Aclaraciones adicionales (opcional)</label>
+          <textarea id="observaciones" placeholder="Anote aquí cualquier información adicional relevante, alergias conocidas, preguntas o comentarios..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIRMAS -->
+    <div class="sig-grid" style="margin-top:32px;">
+      <div class="sig-block">
+        <div style="height:64px;"></div>
+        <div style="border-top:2px solid var(--navy); padding-top:8px; text-align:center;">
+          <p style="font-size:12px; font-weight:700; color:var(--navy); letter-spacing:0.06em; text-transform:uppercase;">Firma del Padre / Madre / Representante Legal</p>
+          <p style="font-size:11.5px; color:var(--muted); margin-top:3px;">Nombre y Nº de documento</p>
+        </div>
+      </div>
+
+      <div class="sig-block">
+        <div style="height:64px;"></div>
+        <div style="border-top:2px solid var(--navy); padding-top:8px; text-align:center;">
+          <p style="font-size:12px; font-weight:700; color:var(--navy); letter-spacing:0.06em; text-transform:uppercase;">Firma del Odontólogo Tratante</p>
+          <p style="font-size:11.5px; color:var(--muted); margin-top:3px;">Nombre y Nº de colegiatura</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTA LEGAL -->
+    <div class="legal-note">
+      <p><strong>NOTA LEGAL:</strong> Este documento ha sido elaborado conforme a los principios de la bioética médica (autonomía, beneficencia, no maleficencia y justicia) y la legislación vigente sobre consentimiento informado en la práctica odontológica. El original debe conservarse en el expediente clínico del paciente y se entregará una copia al representante legal que lo suscribe. La firma de este documento no exime al profesional de brindar atención de calidad conforme a la <em>lex artis</em>.</p>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /page-wrap -->
+
+<script>
+  // ── AUTO-CALCULATE AGE ───────────────────────────────
+  document.getElementById('paciente_nac').addEventListener('change', function() {
+    const dob = new Date(this.value);
+    const now = new Date();
+    let years = now.getFullYear() - dob.getFullYear();
+    let months = now.getMonth() - dob.getMonth();
+    if (months < 0 || (months === 0 && now.getDate() < dob.getDate())) { years--; months += 12; }
+    if (now.getDate() < dob.getDate()) months--;
+    const txt = years > 0 ? (months > 0 ? `${years} años, ${months} meses` : `${years} años`) : `${months} meses`;
+    document.getElementById('paciente_edad').value = txt;
+  });
+
+  // ── DEFAULT DATE ─────────────────────────────────────
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('fecha').value = today;
+
+  // ── PRINT VALIDATION ─────────────────────────────────
+  function handlePrint() {
+    const required = ['ciudad','consultorio','fecha','paciente_nombre','paciente_nac','rep_nombre','rep_tipo_doc','rep_doc','rep_parentesco','rep_tel'];
+    let ok = true;
+    required.forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('invalid');
+      if (!el.value.trim()) {
+        el.classList.add('invalid');
+        ok = false;
+      }
+    });
+    if (!ok) {
+      alert('Por favor completa todos los campos obligatorios (marcados con *) antes de imprimir.');
+      document.querySelector('.invalid').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    window.print();
+  }
+</script>
+</body>
+</html>
