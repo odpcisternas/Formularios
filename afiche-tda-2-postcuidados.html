@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TDA – Cuidados después del traumatismo | MINSAL</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --teal-dark: #085041; --teal-mid: #0F6E56; --teal-base: #1D9E75;
+    --teal-light: #5DCAA5; --teal-pale: #E1F5EE;
+    --red-base: #A32D2D; --red-pale: #FCEBEB; --red-mid: #E24B4A;
+    --coral-base: #993C1D; --coral-pale: #FAECE7;
+    --gray-dark: #2C2C2A; --white: #ffffff;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: #f0f4f2; color: var(--gray-dark); min-height: 100vh; padding: 0; }
+
+  /* HERO */
+  .hero { background: var(--teal-dark); color: white; padding: 3rem 2.5rem 2.5rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 320px; height: 320px; border-radius: 50%; background: rgba(93,202,165,0.12); }
+  .hero::after { content: ''; position: absolute; bottom: -80px; left: 30%; width: 200px; height: 200px; border-radius: 50%; background: rgba(29,158,117,0.18); }
+  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .minsal-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #9FE1CB; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 1.2rem; }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 700; line-height: 1.15; color: white; margin-bottom: 0.6rem; }
+  .hero h1 em { font-style: italic; color: #5DCAA5; }
+  .hero-num { display: inline-block; background: var(--teal-base); color: white; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 0.8rem; letter-spacing: 0.08em; }
+  .hero-subtitle { font-size: 1rem; color: rgba(255,255,255,0.75); max-width: 580px; line-height: 1.6; }
+  .hero-tooth { position: absolute; right: 2.5rem; bottom: 1.5rem; font-size: 7rem; opacity: 0.08; z-index: 0; }
+
+  /* CONTENT */
+  .content { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 3rem; }
+  .section-title { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem; }
+  .section-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .divider { height: 1px; background: rgba(0,0,0,0.07); margin: 2rem 0; }
+
+  /* HIGIENE */
+  .hygiene-section { margin-bottom: 2.5rem; }
+  .hygiene-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.9rem; }
+  .hyg-card { background: var(--white); border-radius: 12px; padding: 1.1rem 1.2rem; border: 1px solid rgba(0,0,0,0.07); }
+  .hyg-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .hyg-title { font-weight: 600; font-size: 0.9rem; color: var(--teal-dark); margin-bottom: 0.3rem; }
+  .hyg-text { font-size: 0.83rem; color: #5F5E5A; line-height: 1.5; }
+
+  /* SEGUIMIENTO */
+  .card { background: var(--white); border-radius: 16px; padding: 1.6rem 1.8rem; border: 1px solid rgba(0,0,0,0.07); }
+  .follow-section { margin-bottom: 2.5rem; }
+  .follow-timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .follow-timeline::before { content: ''; position: absolute; left: 15px; top: 20px; bottom: 20px; width: 2px; background: linear-gradient(to bottom, var(--teal-light), var(--teal-pale)); }
+  .follow-item { display: flex; align-items: flex-start; gap: 1rem; padding: 0.7rem 0; position: relative; }
+  .follow-dot { width: 32px; height: 32px; border-radius: 50%; background: var(--teal-base); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0; position: relative; z-index: 1; border: 3px solid #f0f4f2; }
+  .follow-content { padding-top: 5px; }
+  .follow-time { font-weight: 600; font-size: 0.9rem; color: var(--teal-dark); }
+  .follow-desc { font-size: 0.82rem; color: #5F5E5A; margin-top: 2px; line-height: 1.5; }
+
+  /* ALERTA */
+  .alert-bar { background: var(--coral-pale); border-radius: 12px; padding: 1rem 1.3rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; border: 1px solid rgba(153,60,29,0.2); }
+  .alert-bar .icon { font-size: 1.2rem; flex-shrink: 0; }
+  .alert-bar p { font-size: 0.875rem; color: var(--coral-base); font-weight: 500; line-height: 1.55; }
+  .alert-bar p span { font-weight: 700; }
+
+  /* FOOTER */
+  .footer { background: var(--teal-dark); color: rgba(255,255,255,0.7); text-align: center; padding: 1.5rem; font-size: 0.8rem; line-height: 1.8; }
+  .footer strong { color: white; }
+
+  /* BOTÓN */
+  .print-btn { display: block; margin: 16px auto; background: #1D9E75; color: white; border: none; border-radius: 24px; padding: 10px 32px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; box-shadow: 0 4px 12px rgba(29,158,117,0.35); transition: background 0.15s, transform 0.1s; }
+  .print-btn:hover { background: #0F6E56; transform: translateY(-1px); }
+
+  @page { size: A4 portrait; margin: 12mm; }
+  @media print {
+    body { background: white; }
+    .print-btn { display: none; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-num">AFICHE 2 DE 2</div>
+    <span class="minsal-badge">Ministerio de Salud · Chile · GPC 2023</span>
+    <h1>Después del traumatismo:<br><em>Cuidados y seguimiento</em></h1>
+    <p class="hero-subtitle">Qué hacer en casa, cuándo volver al dentista y señales de alerta que no debes ignorar.</p>
+  </div>
+  <div class="hero-tooth" aria-hidden="true">🦷</div>
+</header>
+
+<main class="content">
+
+  <!-- CUIDADOS EN CASA -->
+  <section class="hygiene-section">
+    <h2 class="section-title" style="color: var(--teal-dark);">
+      <span class="section-dot" style="background: var(--teal-base);"></span>
+      Cuidados en casa después del traumatismo
+    </h2>
+    <div class="hygiene-grid">
+      <div class="hyg-card">
+        <div class="hyg-icon">🪥</div>
+        <div class="hyg-title">Cepillado suave</div>
+        <div class="hyg-text">Cepilla 2 veces al día con pasta fluorada y cepillo de cerdas suaves, con especial cuidado en los dientes afectados.</div>
+      </div>
+      <div class="hyg-card">
+        <div class="hyg-icon">💧</div>
+        <div class="hyg-title">Colutorio con clorhexidina</div>
+        <div class="hyg-text">Usa enjuague con clorhexidina 0,12% dos veces al día durante 7 a 14 días, según la indicación de tu dentista.</div>
+      </div>
+      <div class="hyg-card">
+        <div class="hyg-icon">🍎</div>
+        <div class="hyg-title">Dieta blanda</div>
+        <div class="hyg-text">Evita alimentos duros, pegajosos o que requieran morder fuerte durante las primeras semanas de recuperación.</div>
+      </div>
+      <div class="hyg-card">
+        <div class="hyg-icon">⚽</div>
+        <div class="hyg-title">Reposo deportivo</div>
+        <div class="hyg-text">Evita deportes de contacto mientras dure el tratamiento. Usa protector bucal al retomar la actividad física.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SEGUIMIENTO -->
+  <section class="follow-section">
+    <h2 class="section-title" style="color: var(--teal-dark);">
+      <span class="section-dot" style="background: var(--teal-base);"></span>
+      Controles de seguimiento
+    </h2>
+    <p style="font-size: 0.9rem; color: #5F5E5A; margin-bottom: 1.2rem; line-height: 1.6;">Un traumatismo dentoalveolar puede tener complicaciones que no son visibles de inmediato. Los controles periódicos son esenciales para detectar problemas a tiempo.</p>
+    <div class="card">
+      <div class="follow-timeline">
+        <div class="follow-item">
+          <div class="follow-dot">1</div>
+          <div class="follow-content">
+            <div class="follow-time">Urgencia (mismo día)</div>
+            <div class="follow-desc">Diagnóstico inicial, radiografía, estabilización del diente y plan de tratamiento.</div>
+          </div>
+        </div>
+        <div class="follow-item">
+          <div class="follow-dot">2</div>
+          <div class="follow-content">
+            <div class="follow-time">1 semana</div>
+            <div class="follow-desc">Control post-operatorio. Revisión de la férula si fue colocada. Evaluación de tejidos blandos.</div>
+          </div>
+        </div>
+        <div class="follow-item">
+          <div class="follow-dot">3</div>
+          <div class="follow-content">
+            <div class="follow-time">2–4 semanas</div>
+            <div class="follow-desc">Control clínico y radiográfico. Evaluación de la vitalidad pulpar del diente.</div>
+          </div>
+        </div>
+        <div class="follow-item">
+          <div class="follow-dot">4</div>
+          <div class="follow-content">
+            <div class="follow-time">3–6 meses</div>
+            <div class="follow-desc">Seguimiento para detectar cambios de coloración, dolor o infección que pudieran indicar daño en la pulpa.</div>
+          </div>
+        </div>
+        <div class="follow-item">
+          <div class="follow-dot">5</div>
+          <div class="follow-content">
+            <div class="follow-time">1 año y después</div>
+            <div class="follow-desc">Control anual por al menos 5 años. Algunos casos de reabsorción radicular pueden aparecer tardíamente.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SEÑALES DE ALERTA -->
+  <section>
+    <h2 class="section-title" style="color: var(--teal-dark);">
+      <span class="section-dot" style="background: var(--red-mid);"></span>
+      Señales de alerta: vuelve al dentista si…
+    </h2>
+    <div class="alert-bar">
+      <span class="icon">🔴</span>
+      <p><span>Dolor intenso o espontáneo</span> · <span>Diente que se oscurece o cambia de color</span> · <span>Encía inflamada o con pus</span> · <span>Diente que se mueve más</span> · <span>Fiebre</span> · <span>El niño deja de masticar de ese lado</span></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>📋 Basado en: <strong>Guía de Práctica Clínica para el manejo de urgencia de los Traumatismos Dentoalveolares</strong></p>
+  <p>Ministerio de Salud de Chile · Aprobada por Resolución Exenta N° 1431 · Año 2023</p>
+</footer>
+
+<button class="print-btn" onclick="window.print()">🖨️ Imprimir afiche 2</button>
+</body>
+</html>

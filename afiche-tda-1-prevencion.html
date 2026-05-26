@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TDA – Prevención y Primeros Pasos | MINSAL</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --teal-dark: #085041; --teal-mid: #0F6E56; --teal-base: #1D9E75;
+    --teal-light: #5DCAA5; --teal-pale: #E1F5EE;
+    --amber-base: #BA7517; --amber-pale: #FAEEDA; --amber-mid: #EF9F27;
+    --red-base: #A32D2D; --red-pale: #FCEBEB; --red-mid: #E24B4A;
+    --blue-base: #185FA5; --blue-pale: #E6F1FB;
+    --gray-dark: #2C2C2A; --white: #ffffff;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: #f0f4f2; color: var(--gray-dark); min-height: 100vh; padding: 0; }
+
+  /* HERO */
+  .hero { background: var(--teal-dark); color: white; padding: 3rem 2.5rem 2.5rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 320px; height: 320px; border-radius: 50%; background: rgba(93,202,165,0.12); }
+  .hero::after { content: ''; position: absolute; bottom: -80px; left: 30%; width: 200px; height: 200px; border-radius: 50%; background: rgba(29,158,117,0.18); }
+  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .minsal-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #9FE1CB; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 1.2rem; }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 700; line-height: 1.15; color: white; margin-bottom: 0.6rem; }
+  .hero h1 em { font-style: italic; color: #5DCAA5; }
+  .hero-num { display: inline-block; background: var(--teal-base); color: white; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 0.8rem; letter-spacing: 0.08em; }
+  .hero-subtitle { font-size: 1rem; color: rgba(255,255,255,0.75); max-width: 580px; line-height: 1.6; }
+  .hero-tooth { position: absolute; right: 2.5rem; bottom: 1.5rem; font-size: 7rem; opacity: 0.08; z-index: 0; }
+
+  /* CONTENT */
+  .content { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 3rem; }
+  .section-title { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem; }
+  .section-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .divider { height: 1px; background: rgba(0,0,0,0.07); margin: 2rem 0; }
+
+  /* DEFINICIÓN */
+  .def-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+  .def-card { background: var(--teal-pale); border-radius: 14px; padding: 1.3rem 1.4rem; border-left: 4px solid var(--teal-base); }
+  .def-card .def-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-mid); margin-bottom: 0.4rem; }
+  .def-card .def-value { font-size: 0.95rem; color: var(--teal-dark); line-height: 1.55; }
+
+  /* PREVENCIÓN */
+  .prev-section { margin-bottom: 2.5rem; }
+  .prev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.85rem; }
+  .prev-item { background: var(--white); border-radius: 12px; padding: 1.1rem 1.2rem; border: 1px solid rgba(0,0,0,0.07); display: flex; align-items: flex-start; gap: 0.7rem; }
+  .prev-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; }
+  .prev-text { font-size: 0.875rem; color: #3a3a38; line-height: 1.5; }
+  .prev-text strong { display: block; font-weight: 600; font-size: 0.9rem; color: var(--gray-dark); margin-bottom: 2px; }
+
+  /* DENTICIÓN */
+  .dent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2.5rem; }
+  @media (max-width: 600px) { .dent-grid { grid-template-columns: 1fr; } }
+  .dent-card { border-radius: 16px; padding: 1.5rem 1.6rem; }
+  .dent-card.primaria { background: var(--amber-pale); border: 1px solid rgba(186,117,23,0.25); }
+  .dent-card.permanente { background: var(--blue-pale); border: 1px solid rgba(24,95,165,0.2); }
+  .dent-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 0.8rem; }
+  .primaria .dent-badge { background: #FAC775; color: #633806; }
+  .permanente .dent-badge { background: #B5D4F4; color: #0C447C; }
+  .dent-title { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .primaria .dent-title { color: #633806; }
+  .permanente .dent-title { color: #0C447C; }
+  .dent-age { font-size: 0.8rem; margin-bottom: 1rem; }
+  .primaria .dent-age { color: #854F0B; }
+  .permanente .dent-age { color: #185FA5; }
+  .dent-steps { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .dent-steps li { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.875rem; line-height: 1.5; }
+  .primaria .dent-steps li { color: #4A1B0C; }
+  .permanente .dent-steps li { color: #042C53; }
+  .step-num { min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .primaria .step-num { background: #EF9F27; color: #412402; }
+  .permanente .step-num { background: #378ADD; color: #042C53; }
+
+  /* AVULSIÓN */
+  .emergency-box { background: var(--red-pale); border: 2px solid #F09595; border-radius: 16px; padding: 1.6rem 1.8rem; margin-bottom: 2.5rem; }
+  .emergency-header { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1.2rem; }
+  .emergency-icon { width: 42px; height: 42px; border-radius: 50%; background: var(--red-mid); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; flex-shrink: 0; }
+  .emergency-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 600; color: var(--red-base); }
+  .emergency-sub { font-size: 0.82rem; color: #791F1F; margin-top: 2px; }
+  .emergency-steps { display: flex; flex-direction: column; gap: 0.7rem; }
+  .e-step { display: flex; align-items: flex-start; gap: 0.8rem; background: white; border-radius: 10px; padding: 0.9rem 1rem; border: 1px solid rgba(163,45,45,0.12); }
+  .e-step-num { min-width: 28px; height: 28px; border-radius: 50%; background: var(--red-mid); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; }
+  .e-step-text { font-size: 0.875rem; color: #4A1B0C; line-height: 1.55; }
+  .e-step-text strong { color: var(--red-base); font-weight: 600; }
+  .e-step-text .no { color: var(--red-mid); font-weight: 600; }
+
+  /* ANTIBIÓTICOS */
+  .antibiotics-note { background: var(--amber-pale); border-left: 4px solid var(--amber-mid); border-radius: 0 12px 12px 0; padding: 1.1rem 1.4rem; margin-bottom: 2rem; display: flex; align-items: flex-start; gap: 0.8rem; }
+  .antibiotics-note .icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+  .antibiotics-note p { font-size: 0.875rem; color: #412402; line-height: 1.6; }
+  .antibiotics-note p strong { color: var(--amber-base); }
+
+  /* FOOTER */
+  .footer { background: var(--teal-dark); color: rgba(255,255,255,0.7); text-align: center; padding: 1.5rem; font-size: 0.8rem; line-height: 1.8; }
+  .footer strong { color: white; }
+
+  /* BOTÓN IMPRIMIR */
+  .print-btn { display: block; margin: 16px auto; background: #1D9E75; color: white; border: none; border-radius: 24px; padding: 10px 32px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; box-shadow: 0 4px 12px rgba(29,158,117,0.35); transition: background 0.15s, transform 0.1s; }
+  .print-btn:hover { background: #0F6E56; transform: translateY(-1px); }
+
+  @page { size: A4 portrait; margin: 12mm; }
+  @media print {
+    body { background: white; }
+    .print-btn { display: none; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-num">AFICHE 1 DE 2</div>
+    <span class="minsal-badge">Ministerio de Salud · Chile · GPC 2023</span>
+    <h1>Traumatismo dental:<br><em>Prevención y primeros pasos</em></h1>
+    <p class="hero-subtitle">Qué es un TDA, cómo evitarlo y qué hacer si ocurre, incluyendo el manejo de una avulsión.</p>
+  </div>
+  <div class="hero-tooth" aria-hidden="true">🦷</div>
+</header>
+
+<main class="content">
+
+  <!-- QUÉ ES -->
+  <section>
+    <h2 class="section-title" style="color: var(--teal-dark);">
+      <span class="section-dot" style="background: var(--teal-base);"></span>
+      ¿Qué es un traumatismo dentoalveolar?
+    </h2>
+    <div class="def-grid">
+      <div class="def-card">
+        <div class="def-label">Definición</div>
+        <div class="def-value">Son lesiones causadas por un golpe que afectan al diente y/o los tejidos que lo rodean: encía, hueso y ligamento.</div>
+      </div>
+      <div class="def-card">
+        <div class="def-label">Frecuencia</div>
+        <div class="def-value">Es la <strong>5.ª lesión más prevalente en el mundo</strong>. En Chile, afecta al 5% de niños de 12 años y puede llegar al 30% en algunas localidades.</div>
+      </div>
+      <div class="def-card">
+        <div class="def-label">Tipos comunes</div>
+        <div class="def-value">Fractura de corona, fractura de raíz, diente desplazado (luxación) o diente completamente salido (avulsión).</div>
+      </div>
+      <div class="def-card">
+        <div class="def-label">Urgencia dental</div>
+        <div class="def-value">En Chile es considerado una <strong>urgencia odontológica</strong>. Su atención está cubierta por la garantía GES.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREVENCIÓN -->
+  <section class="prev-section">
+    <h2 class="section-title" style="color: var(--teal-dark);">
+      <span class="section-dot" style="background: var(--teal-base);"></span>
+      ¿Cómo prevenir un golpe en los dientes?
+    </h2>
+    <div class="prev-grid">
+      <div class="prev-item">
+        <div class="prev-icon" style="background: #E1F5EE;">⛑️</div>
+        <div class="prev-text"><strong>Usa protector bucal</strong>En deportes de contacto: fútbol, básquetbol, artes marciales, ciclismo.</div>
+      </div>
+      <div class="prev-item">
+        <div class="prev-icon" style="background: #FAEEDA;">🚗</div>
+        <div class="prev-text"><strong>Cinturón de seguridad</strong>Siempre abrochado en el auto. Usa silla infantil según la edad.</div>
+      </div>
+      <div class="prev-item">
+        <div class="prev-icon" style="background: #E6F1FB;">🦷</div>
+        <div class="prev-text"><strong>Trata las maloclusiones</strong>Las alteraciones en la mordida aumentan el riesgo. Consulta con tu dentista.</div>
+      </div>
+      <div class="prev-item">
+        <div class="prev-icon" style="background: #FCEBEB;">💍</div>
+        <div class="prev-text"><strong>Evita piercings linguales</strong>Aumentan el riesgo de golpear o fracturar los dientes.</div>
+      </div>
+      <div class="prev-item">
+        <div class="prev-icon" style="background: #EAF3DE;">🏃</div>
+        <div class="prev-text"><strong>Superficies seguras</strong>Patios y lugares de juego con pisos blandos o con amortiguación.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- DIENTE TEMPORAL VS PERMANENTE -->
+  <section>
+    <h2 class="section-title" style="color: var(--teal-dark);">
+      <span class="section-dot" style="background: var(--teal-base);"></span>
+      ¿Qué hacer según el tipo de diente afectado?
+    </h2>
+    <div class="dent-grid">
+      <div class="dent-card primaria">
+        <span class="dent-badge">Diente de leche / Temporal</span>
+        <h3 class="dent-title">Dentición primaria</h3>
+        <p class="dent-age">Niños de aprox. 0 a 6 años</p>
+        <ul class="dent-steps">
+          <li><span class="step-num">1</span><span><strong>Acude al dentista de urgencia</strong> lo antes posible, aunque el diente esté suelto.</span></li>
+          <li><span class="step-num">2</span><span><strong>No vuelvas a poner</strong> un diente de leche que se haya caído completamente: podría dañar el diente permanente que viene debajo.</span></li>
+          <li><span class="step-num">3</span><span>Si el diente está muy suelto y hay <strong>riesgo de que el niño lo trague o inhale</strong>, extráelo con cuidado y lleva al niño al dentista.</span></li>
+        </ul>
+      </div>
+      <div class="dent-card permanente">
+        <span class="dent-badge">Diente definitivo / Permanente</span>
+        <h3 class="dent-title">Dentición permanente</h3>
+        <p class="dent-age">Desde aprox. 6 años en adelante</p>
+        <ul class="dent-steps">
+          <li><span class="step-num">1</span><span><strong>Ve al dentista de urgencia de inmediato.</strong> El tiempo es clave para salvar el diente.</span></li>
+          <li><span class="step-num">2</span><span>Si el diente se desplazó pero no salió, <strong>no lo muevas.</strong> El dentista lo reposicionará.</span></li>
+          <li><span class="step-num">3</span><span>Cualquier tratamiento adicional que se requiera <strong>debe ser realizado por un dentista.</strong> No intentes manipular el diente por tu cuenta.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVULSIÓN -->
+  <section>
+    <div class="emergency-box">
+      <div class="emergency-header">
+        <div class="emergency-icon">🚨</div>
+        <div>
+          <div class="emergency-title">¡Diente permanente completamente salido! (Avulsión)</div>
+          <div class="emergency-sub">Esta es la urgencia dental más grave. Sigue estos pasos en los próximos minutos.</div>
+        </div>
+      </div>
+      <div class="emergency-steps">
+        <div class="e-step">
+          <div class="e-step-num">1</div>
+          <div class="e-step-text"><strong>Recoge el diente con la mano</strong>, tomándolo por la corona (la parte blanca visible). <span class="no">No lo recojas con papel higiénico, paño de tela ni toalla de papel (toalla nova).</span></div>
+        </div>
+        <div class="e-step">
+          <div class="e-step-num">2</div>
+          <div class="e-step-text"><strong>No manipules ni limpies la raíz</strong>, aunque el diente esté sucio. Recógelo y colócalo directamente en un frasco o vaso con leche o suero. <span class="no">No lo envuelvas en papel higiénico, paño de tela ni toalla de papel.</span></div>
+        </div>
+        <div class="e-step">
+          <div class="e-step-num">3</div>
+          <div class="e-step-text"><strong>Mantenlo húmedo en uno de estos líquidos (en orden de preferencia):</strong><br>
+          ① Leche entera fría &nbsp;|&nbsp; ② Suero fisiológico
+          <br><span class="no">Nunca en agua corriente ni en seco.</span></div>
+        </div>
+        <div class="e-step">
+          <div class="e-step-num">4</div>
+          <div class="e-step-text"><strong>Ve al dentista de urgencia inmediatamente.</strong> El reimplante tiene más éxito dentro de los <strong>primeros 60 minutos.</strong><br>Incluso después de 1 hora el dentista puede reimplantar el diente.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANTIBIÓTICOS -->
+  <div class="antibiotics-note">
+    <span class="icon">⚠️</span>
+    <p><strong>Sobre el uso de antibióticos:</strong> Solo se prescriben en casos específicos, los cuales serán indicados por el dentista. <strong>Nunca uses antibióticos como automedicación.</strong></p>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>📋 Basado en: <strong>Guía de Práctica Clínica para el manejo de urgencia de los Traumatismos Dentoalveolares</strong></p>
+  <p>Ministerio de Salud de Chile · Aprobada por Resolución Exenta N° 1431 · Año 2023</p>
+</footer>
+
+<button class="print-btn" onclick="window.print()">🖨️ Imprimir afiche 1</button>
+</body>
+</html>
