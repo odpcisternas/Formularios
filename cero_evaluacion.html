@@ -5,60 +5,95 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CERO — Evaluación de Riesgo</title>
 <style>
-:root{--bg:#f5f3ef;--surface:#fff;--border:#e2ded8;--text:#1a1816;--muted:#6b6560;--accent:#2563a8;--al:#dbeafe;--low:#166534;--lbg:#dcfce7;--high:#991b1b;--hbg:#fee2e2;--r:8px;--rl:12px}
+:root{--bg:#f5f3ef;--surface:#fff;--border:#e2ded8;--text:#1a1816;--muted:#6b6560;--accent:#2563a8;--al:#dbeafe;--low:#166534;--lbg:#dcfce7;--high:#991b1b;--hbg:#fee2e2;--r:6px;--rl:10px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;padding:2rem}
-.wrap{max-width:820px;margin:0 auto}
-.page-header{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.25rem 1.5rem;margin-bottom:1.25rem;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
-.page-header h1{font-size:20px;font-weight:700;color:var(--accent);margin-bottom:3px;font-family:Georgia,serif}
-.page-header p{font-size:12px;color:var(--muted)}
-.risk-badge{font-size:12px;padding:4px 14px;border-radius:20px;font-weight:700;flex-shrink:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5;padding:1rem}
+.wrap{max-width:760px;margin:0 auto}
+
+/* HEADER */
+.page-header{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:.8rem 1rem;margin-bottom:.75rem;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.page-header h1{font-size:16px;font-weight:700;color:var(--accent);font-family:Georgia,serif}
+.page-header p{font-size:11px;color:var(--muted);margin-top:2px}
+.risk-badge{font-size:11px;padding:3px 12px;border-radius:20px;font-weight:700;flex-shrink:0;white-space:nowrap}
 .risk-badge.low{background:var(--lbg);color:var(--low)}
 .risk-badge.high{background:var(--hbg);color:var(--high)}
 .risk-badge.none{background:#fef3c7;color:#92400e}
-.actions{display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap}
-.btn{padding:8px 16px;border-radius:var(--r);font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:all .15s}
+
+/* ACTIONS */
+.actions{display:flex;gap:6px;margin-bottom:.75rem;flex-wrap:wrap}
+.btn{padding:6px 13px;border-radius:var(--r);font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:all .15s}
 .btn:hover{background:var(--bg)}
 .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
 .btn-primary:hover{background:#1d4ed8}
-.sec{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.2rem;margin-bottom:1rem}
-.sec-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:.9rem}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.f{display:flex;flex-direction:column;gap:3px;margin-bottom:2px}
-.f label{font-size:11px;color:var(--muted)}
-.f input,.f select,.f textarea{border:1px solid var(--border);border-radius:var(--r);padding:6px 9px;font-size:13px;background:var(--bg);color:var(--text);width:100%}
-.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--al)}
-.f textarea{resize:vertical;min-height:52px}
-.divider{height:1px;background:var(--border);margin:10px 0}
-.rrow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+
+/* SECTIONS */
+.sec{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:.8rem 1rem;margin-bottom:.6rem}
+.sec-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:.6rem}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+
+/* FIELDS */
+.f{display:flex;flex-direction:column;gap:2px}
+.f label{font-size:10px;color:var(--muted)}
+.f input,.f select{border:1px solid var(--border);border-radius:var(--r);padding:5px 8px;font-size:12px;background:var(--bg);color:var(--text);width:100%}
+.f input:focus,.f select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--al)}
+.divider{height:1px;background:var(--border);margin:8px 0}
+
+/* RISK ROWS */
+.rrow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)}
 .rrow:last-of-type{border-bottom:none}
-.rq{font-size:13px}
-.hint{font-size:11px;color:var(--muted);display:block;margin-top:2px}
-.rg{display:flex;gap:5px}
-.rpill{padding:4px 10px;border-radius:20px;border:1px solid var(--border);font-size:12px;cursor:pointer;background:var(--bg);color:var(--muted);transition:all .15s;white-space:nowrap}
+.rq{font-size:12px;line-height:1.4}
+.hint{font-size:10px;color:var(--muted);display:block;margin-top:1px}
+.rg{display:flex;gap:4px;flex-shrink:0}
+.rpill{padding:3px 9px;border-radius:20px;border:1px solid var(--border);font-size:11px;cursor:pointer;background:var(--bg);color:var(--muted);transition:all .15s;white-space:nowrap}
 .rpill.sl{background:var(--lbg);border-color:var(--low);color:var(--low);font-weight:700}
 .rpill.sh{background:var(--hbg);border-color:var(--high);color:var(--high);font-weight:700}
-.crow{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:13px}
-.crow:last-child{border-bottom:none}
-.crow input[type=checkbox]{margin-top:2px;accent-color:var(--accent);cursor:pointer}
-.crow label{cursor:pointer;line-height:1.4;flex:1}
-.rresult{display:flex;gap:8px;margin-top:8px}
-.rrbtn{flex:1;padding:10px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;text-align:center}
+
+/* RISK RESULT */
+.rresult{display:flex;gap:8px;margin-top:6px}
+.rrbtn{flex:1;padding:8px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;text-align:center}
 .rrbtn.sl{background:var(--lbg);border-color:var(--low);color:var(--low)}
 .rrbtn.sh{background:var(--hbg);border-color:var(--high);color:var(--high)}
-.der-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
-.der-item{display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg);font-size:13px;cursor:pointer;transition:all .15s}
+
+/* DERIVACIONES */
+.der-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:6px}
+.der-item{display:flex;align-items:center;gap:6px;padding:5px 7px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg);font-size:12px;cursor:pointer;transition:all .15s}
 .der-item:hover{border-color:var(--accent)}
 .der-item input[type=checkbox]{accent-color:var(--accent);cursor:pointer;flex-shrink:0}
-.der-item label{cursor:pointer;flex:1}
-.der-item.otros-row{grid-column:1/-1;display:flex;align-items:center;gap:8px}
-.der-item.otros-row input[type=text]{flex:1;border:none;background:transparent;font-size:13px;color:var(--text);outline:none}
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--text);color:#fff;padding:10px 18px;border-radius:var(--r);font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99}
+.der-item label{cursor:pointer;flex:1;line-height:1.3}
+.der-otros{grid-column:1/-1;display:flex;align-items:center;gap:6px;padding:5px 7px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg);font-size:12px}
+.der-otros input[type=checkbox]{accent-color:var(--accent);cursor:pointer;flex-shrink:0}
+.der-otros input[type=text]{flex:1;border:none;background:transparent;font-size:12px;color:var(--text);outline:none}
+
+/* DATOS CONTROL inline */
+.datos-inline{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.datos-inline .f{flex:1;min-width:110px}
+
+/* TOAST */
+.toast{position:fixed;bottom:1rem;right:1rem;background:var(--text);color:#fff;padding:8px 16px;border-radius:var(--r);font-size:12px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99}
 .toast.show{opacity:1}
-.note{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+/* PRINT */
+@media print{
+  .actions{display:none!important}
+  body{padding:0;background:#fff;font-size:12px}
+  .wrap{max-width:100%}
+  .sec{break-inside:avoid;margin-bottom:.4rem;padding:.6rem .8rem}
+  .page-header{margin-bottom:.5rem;padding:.6rem .8rem}
+}
+@media print and (color-adjust:exact){
+  .rpill.sl,.rrbtn.sl,.risk-badge.low{background:var(--lbg)!important;color:var(--low)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rpill.sh,.rrbtn.sh,.risk-badge.high{background:var(--hbg)!important;color:var(--high)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+/* BW print class */
+body.bw .rpill.sl,body.bw .rrbtn.sl,body.bw .risk-badge.low{background:#e0e0e0!important;color:#000!important;border-color:#666!important}
+body.bw .rpill.sh,body.bw .rrbtn.sh,body.bw .risk-badge.high{background:#aaa!important;color:#000!important;border-color:#333!important}
+body.bw .der-item,body.bw .sec,body.bw .page-header{background:#fff!important;border-color:#999!important}
+body.bw .page-header h1{color:#000!important}
+body.bw .rpill,body.bw .der-item{background:#f0f0f0!important}
 @media(max-width:600px){.g2,.g3,.der-grid{grid-template-columns:1fr}.rrow{grid-template-columns:1fr}}
-@media print{.actions{display:none}.sec{break-inside:avoid}body{padding:0;background:#fff}}
 </style>
 </head>
 <body>
@@ -66,35 +101,34 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
 
 <div class="page-header">
   <div>
-    <h1>Evaluación de Riesgo Odontológico</h1>
-    <p>Programa CERO · Control con Enfoque de Riesgo · Población infantil (6 m – 9 años) y adolescente (10 – 19 años)</p>
+    <h1>Evaluación de Riesgo Odontológico — Programa CERO</h1>
+    <p>Dra. María José Cisternas · Cirujano Dentista — Odontopediatra</p>
   </div>
   <div id="badge" class="risk-badge none">Sin evaluar</div>
 </div>
 
 <div class="actions">
   <button class="btn btn-primary" onclick="guardar()">💾 Guardar</button>
-  <button class="btn" onclick="limpiar()">🗑 Limpiar formulario</button>
-  <button class="btn" onclick="window.print()">🖨 Imprimir</button>
+  <button class="btn" onclick="limpiar()">🗑 Limpiar</button>
+  <button class="btn" onclick="imprimirColor()">🖨 Imprimir en color</button>
+  <button class="btn" onclick="imprimirBN()">⬛ Imprimir B/N</button>
 </div>
 
-<!-- IDENTIFICACIÓN -->
+<!-- DATOS DEL CONTROL -->
 <div class="sec">
-  <div class="sec-title">👤 Identificación del paciente</div>
-  <div class="g3" style="margin-bottom:10px">
-    <div class="f"><label>Nombre completo</label><input id="nombre" type="text" placeholder="Apellido, Nombre"></div>
-    <div class="f"><label>RUT</label><input id="rut" type="text" placeholder="12.345.678-9"></div>
-    <div class="f"><label>Fecha de nacimiento</label><input id="fec_nac" type="date"></div>
-  </div>
-  <div class="g3" style="margin-bottom:10px">
-    <div class="f"><label>Edad</label><input id="edad" type="text" placeholder="ej. 7 años 3 meses"></div>
-    <div class="f"><label>Sexo registral</label><select id="sexo"><option value="">—</option><option>Femenino</option><option>Masculino</option></select></div>
-    <div class="f"><label>Nombre social (si aplica)</label><input id="nombre_social" type="text"></div>
-  </div>
-  <div class="g3">
-    <div class="f"><label>Tipo de control</label><select id="tipo_control"><option value="">—</option><option>Ingreso CERO (primera vez)</option><option>Control anual (con pauta)</option><option>Control de seguimiento (sin pauta)</option></select></div>
-    <div class="f"><label>Fecha de atención</label><input id="fec_atencion" type="date"></div>
-    <div class="f"><label>Profesional</label><input id="profesional" type="text"></div>
+  <div class="sec-title">📋 Datos del control</div>
+  <div class="datos-inline">
+    <div class="f"><label>Nombre del paciente</label><input id="nombre" type="text" placeholder="Apellido, Nombre"></div>
+    <div class="f" style="max-width:100px"><label>Edad</label><input id="edad" type="text" placeholder="ej. 7 a 3 m"></div>
+    <div class="f" style="max-width:130px"><label>Fecha de atención</label><input id="fec_atencion" type="date"></div>
+    <div class="f" style="max-width:130px"><label>Tipo de control</label>
+      <select id="tipo_control">
+        <option value="">—</option>
+        <option>Ingreso CERO</option>
+        <option>Control anual</option>
+        <option>Control seguimiento</option>
+      </select>
+    </div>
   </div>
 </div>
 
@@ -102,7 +136,7 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
 <div class="sec">
   <div class="sec-title">🩺 I. Anamnesis</div>
   <div class="rrow">
-    <div class="rq">¿Presenta condición que disminuye flujo salival (enfermedades, fármacos)?
+    <div class="rq">¿Presenta condición que disminuye flujo salival?
       <span class="hint">Pseudoefedrina, fluoxetina, risperidona, metilfenidato, antihistamínicos, antineoplásicos, isotretinoína, tramadol, diazepam, otros</span>
     </div>
     <div class="rg" id="rr_saliva">
@@ -112,14 +146,13 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
   </div>
   <div class="rrow">
     <div class="rq">¿Presenta situación de discapacidad?
-      <span class="hint">Física, del desarrollo, mental, sensorial, conductual, cognitiva o deterioro emocional (ej. TEA, síndrome Down, parálisis cerebral)</span>
+      <span class="hint">Física, del desarrollo, mental, sensorial, conductual, cognitiva o deterioro emocional</span>
     </div>
     <div class="rg" id="rr_disc">
       <div class="rpill" onclick="sr('rr_disc','bajo',this)">Bajo — No</div>
       <div class="rpill" onclick="sr('rr_disc','alto',this)">Alto — Sí</div>
     </div>
   </div>
-  <div class="f" style="margin-top:8px"><label>Fármaco / condición relevante (si aplica)</label><input id="farmaco" type="text" placeholder="Especificar"></div>
 </div>
 
 <!-- CONDICIÓN CLÍNICA -->
@@ -127,7 +160,7 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
   <div class="sec-title">🦷 II. Condición clínica</div>
   <div class="rrow">
     <div class="rq">¿Presenta manchas blancas o lesiones de caries?
-      <span class="hint">1–6 años: manchas blancas o caries cavitadas · 7+ años / adolescentes: manchas blancas o COPD &gt; 0</span>
+      <span class="hint">1–6 años: manchas o caries cavitadas · 7+ años / adolescentes: manchas blancas o COPD &gt; 0</span>
     </div>
     <div class="rg" id="rr_caries">
       <div class="rpill" onclick="sr('rr_caries','bajo',this)">Bajo — No</div>
@@ -136,25 +169,27 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
   </div>
   <div class="rrow">
     <div class="rq">¿Cuál es el estado de las encías?
-      <span class="hint">Alto: inflamación de encías y/o presencia de placa visible en dientes anteriores</span>
+      <span class="hint">Alto: inflamación y/o placa visible en dientes anteriores</span>
     </div>
     <div class="rg" id="rr_encias">
-      <div class="rpill" onclick="sr('rr_encias','bajo',this)">Bajo — Sin placa / sin gingivitis</div>
-      <div class="rpill" onclick="sr('rr_encias','alto',this)">Alto — Inflamación / placa</div>
+      <div class="rpill" onclick="sr('rr_encias','bajo',this)">Bajo — Sin placa</div>
+      <div class="rpill" onclick="sr('rr_encias','alto',this)">Alto — Inflamación</div>
     </div>
   </div>
-  <div class="divider"></div>
-  <p style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px">Índice ceod / COPD</p>
-  <div class="g3">
-    <div class="f"><label>Cariados (c / C)</label><input id="ceod_c" type="number" min="0" value="0"></div>
-    <div class="f"><label>Obturados (o / O)</label><input id="ceod_o" type="number" min="0" value="0"></div>
-    <div class="f"><label>Perdidos (e / P)</label><input id="ceod_e" type="number" min="0" value="0"></div>
-  </div>
   <div class="g2" style="margin-top:8px">
-    <div class="f"><label>Total ceod / COPD</label><input id="ceod_total" type="number" min="0" value="0"></div>
-    <div class="f"><label>Índice aplicado</label><select id="ceod_tipo"><option value="">—</option><option>ceod (menor de 7 años)</option><option>COPD (7 años o más)</option></select></div>
+    <div class="f">
+      <label>Índice ceod / COPD</label>
+      <input id="ceod_val" type="number" min="0" placeholder="Número total">
+    </div>
+    <div class="f">
+      <label>Índice aplicado</label>
+      <select id="ceod_tipo">
+        <option value="">—</option>
+        <option>ceod (menor de 7 años)</option>
+        <option>COPD (7 años o más)</option>
+      </select>
+    </div>
   </div>
-  <p class="note">* En lactantes sin dientes erupcionados registrar ceod = 0 / "sin historia de caries"</p>
 </div>
 
 <!-- HIGIENE -->
@@ -162,7 +197,7 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
   <div class="sec-title">💧 III. Higiene</div>
   <div class="rrow">
     <div class="rq">¿Los adultos lavan / supervisan el cepillado?
-      <span class="hint">0–6 años: padres/cuidadores lavan · 7–9 años: supervisan · Adolescente: pregunta directa al usuario</span>
+      <span class="hint">0–6 a: padres lavan · 7–9 a: supervisan · Adolescente: pregunta directa</span>
     </div>
     <div class="rg" id="rr_hig1">
       <div class="rpill" onclick="sr('rr_hig1','bajo',this)">Bajo — Siempre</div>
@@ -172,8 +207,8 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
   <div class="rrow">
     <div class="rq">¿Cuántas veces al día se cepilla en casa?</div>
     <div class="rg" id="rr_hig2">
-      <div class="rpill" onclick="sr('rr_hig2','bajo',this)">Bajo — ≥ 2 veces/día</div>
-      <div class="rpill" onclick="sr('rr_hig2','alto',this)">Alto — &lt; 2 veces/día</div>
+      <div class="rpill" onclick="sr('rr_hig2','bajo',this)">Bajo — ≥ 2/día</div>
+      <div class="rpill" onclick="sr('rr_hig2','alto',this)">Alto — &lt; 2/día</div>
     </div>
   </div>
   <div class="rrow">
@@ -183,7 +218,6 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
       <div class="rpill" onclick="sr('rr_hig3','alto',this)">Alto — A veces/Nunca</div>
     </div>
   </div>
-  <div class="f" style="margin-top:8px"><label>Instrumentos de higiene evaluados / observaciones</label><textarea id="obs_higiene" placeholder="Tipo de cepillo, seda dental, pasta usada, técnica observada..."></textarea></div>
 </div>
 
 <!-- DIETA -->
@@ -191,7 +225,7 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
   <div class="sec-title">🥗 IV. Dieta</div>
   <div class="rrow">
     <div class="rq">¿Cuántas veces al día ingiere alimentos y/o líquidos azucarados?
-      <span class="hint">0–2 años: 1 o más veces/día = alto · 3–19 años: 4 o más veces/día = alto</span>
+      <span class="hint">0–2 años: 1 o más veces = alto · 3–19 años: 4 o más veces = alto</span>
     </div>
     <div class="rg" id="rr_dieta1">
       <div class="rpill" onclick="sr('rr_dieta1','bajo',this)">Bajo</div>
@@ -201,18 +235,17 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
   <div class="rrow">
     <div class="rq">¿En qué momento realiza la ingesta de azucarados?</div>
     <div class="rg" id="rr_dieta2">
-      <div class="rpill" onclick="sr('rr_dieta2','bajo',this)">Bajo — Con comidas principales</div>
+      <div class="rpill" onclick="sr('rr_dieta2','bajo',this)">Bajo — Con comidas</div>
       <div class="rpill" onclick="sr('rr_dieta2','alto',this)">Alto — Entre comidas</div>
     </div>
   </div>
   <div class="rrow">
-    <div class="rq">¿Se queda dormido con mamadera/vaso azucarado? (0–6 años) / ¿Ingiere azucarados tras el último cepillado? (7–19 años)</div>
+    <div class="rq">¿Mamadera al dormir? / ¿Azucarados tras el último cepillado?</div>
     <div class="rg" id="rr_dieta3">
       <div class="rpill" onclick="sr('rr_dieta3','bajo',this)">Bajo — Nunca</div>
       <div class="rpill" onclick="sr('rr_dieta3','alto',this)">Alto — A veces/Siempre</div>
     </div>
   </div>
-  <div class="f" style="margin-top:8px"><label>Observaciones de dieta</label><textarea id="obs_dieta" placeholder="Patrón de ingesta, colaciones, bebidas habituales..."></textarea></div>
 </div>
 
 <!-- FLUORUROS -->
@@ -220,16 +253,12 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
   <div class="sec-title">🛡 V. Fluoruros</div>
   <div class="rrow">
     <div class="rq">¿Utiliza pasta dental con 1000–1500 ppm de fluoruro?
-      <span class="hint">Sin dientes erupcionados (menores de 1 año) → marcar "No aplica"</span>
+      <span class="hint">Sin dientes erupcionados → No aplica</span>
     </div>
     <div class="rg" id="rr_fluor">
       <div class="rpill" onclick="sr('rr_fluor','bajo',this)">Bajo — Sí</div>
       <div class="rpill" onclick="sr('rr_fluor','alto',this)">Alto — No</div>
     </div>
-  </div>
-  <div class="g2" style="margin-top:8px">
-    <div class="f"><label>Marca / ppm declarada</label><input id="pasta_fluor" type="text" placeholder="ej. Colgate 1450 ppm"></div>
-    <div class="f"><label>Dosis utilizada</label><select id="dosis_fluor"><option value="">—</option><option>Grano de arroz / punta del cepillo (&lt;2 años)</option><option>Arveja (≥2 años)</option><option>Sin aplicar (sin dientes erupcionados)</option></select></div>
   </div>
 </div>
 
@@ -237,97 +266,57 @@ body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-si
 <div class="sec">
   <div class="sec-title">❤ VI. Motivación</div>
   <div class="rrow">
-    <div class="rq">Según percepción del/la odontólogo/a: ¿cuál es la motivación en el cuidado oral?
-      <span class="hint">Considerar: higiene general, trato, cuaderno de salud, actitud observada en consulta</span>
+    <div class="rq">Motivación de padres/cuidadores (y adolescente) en el cuidado oral
+      <span class="hint">Considerar: higiene general, trato, cuaderno de salud, actitud en consulta</span>
     </div>
     <div class="rg" id="rr_motiv">
       <div class="rpill" onclick="sr('rr_motiv','bajo',this)">Bajo — Alta motivación</div>
       <div class="rpill" onclick="sr('rr_motiv','alto',this)">Alto — Baja motivación</div>
     </div>
   </div>
-  <div class="f" style="margin-top:8px"><label>Observaciones de motivación</label><textarea id="obs_motiv" placeholder="Actitud del cuidador o adolescente, comprensión de indicaciones, barreras detectadas..."></textarea></div>
-</div>
-
-<!-- HÁBITOS -->
-<div class="sec">
-  <div class="sec-title">⚠ VII. Hábitos y maloclusiones &nbsp;<span style="font-size:10px;font-weight:400;color:#9ca3af">(no puntúan para el riesgo total)</span></div>
-  <div class="g2">
-    <div>
-      <div class="crow"><input type="checkbox" id="hab_suc"><label for="hab_suc">Succión digital persistente (≥ 2 años)</label></div>
-      <div class="crow"><input type="checkbox" id="hab_chu"><label for="hab_chu">Uso de chupete / mamadera (≥ 2 años)</label></div>
-      <div class="crow"><input type="checkbox" id="hab_mal"><label for="hab_mal">Maloclusión presente</label></div>
-      <div class="crow"><input type="checkbox" id="hab_brux"><label for="hab_brux">Bruxismo (sueño o vigilia)</label></div>
-      <div class="crow"><input type="checkbox" id="hab_anq"><label for="hab_anq">Anquiloglosia (frenillo lingual corto)</label></div>
-    </div>
-    <div>
-      <div class="crow"><input type="checkbox" id="hab_resp"><label for="hab_resp">Respiración bucal</label></div>
-      <div class="crow"><input type="checkbox" id="hab_oni"><label for="hab_oni">Onicofagia / interposición de objetos (adol.)</label></div>
-      <div class="crow"><input type="checkbox" id="hab_dro"><label for="hab_dro">Consumo tabaco / alcohol / drogas (adol.)</label></div>
-      <div class="crow"><input type="checkbox" id="hab_pie"><label for="hab_pie">Piercing oral (adol.)</label></div>
-      <div class="crow"><input type="checkbox" id="hab_les"><label for="hab_les">Lesión mucosa oral (&gt; 10 días → derivar)</label></div>
-    </div>
-  </div>
-  <div class="f" style="margin-top:8px"><label>Observaciones hábitos / maloclusión</label><textarea id="obs_hab" placeholder="Tipo de maloclusión, mordida abierta, necesidad de derivación..."></textarea></div>
 </div>
 
 <!-- RIESGO TOTAL -->
 <div class="sec" style="border-color:#93c5fd">
   <div class="sec-title">📊 Categorización del riesgo total</div>
-  <p style="font-size:12px;color:var(--muted);margin-bottom:10px">
-    <strong>Alto automático</strong> si: anamnesis o condición clínica con ≥1 respuesta alta; o ≥2 de higiene / dieta / fluoruros / motivación en alto.<br>
-    <strong>Bajo</strong> si anamnesis y condición clínica en bajo, y ≥3 de los otros ámbitos también en bajo.
+  <p style="font-size:10px;color:var(--muted);margin-bottom:6px">
+    <strong>Alto automático</strong> si: anamnesis o condición clínica con ≥1 alta; o ≥2 de higiene/dieta/fluoruros/motivación en alto. &nbsp;|&nbsp;
+    <strong>Bajo</strong> si anamnesis y condición clínica en bajo y ≥3 de los otros ámbitos en bajo.
   </p>
   <div class="rresult">
     <div class="rrbtn" id="rb_bajo" onclick="selRisk('bajo')">✓ Bajo riesgo</div>
     <div class="rrbtn" id="rb_alto" onclick="selRisk('alto')">⚠ Alto riesgo</div>
   </div>
-  <div class="g2" style="margin-top:12px">
-    <div class="f"><label>Frecuencia de controles</label>
-      <select id="frec">
-        <option value="">—</option>
-        <option>6 meses: control único</option>
-        <option>1–2 años / bajo riesgo: 1 control/año</option>
-        <option>1–2 años / alto riesgo: 2 controles/año</option>
-        <option>3–9 años / bajo riesgo: 2 controles/año</option>
-        <option>3–9 años / alto riesgo: 3 controles/año</option>
-        <option>Adolescente / bajo riesgo: 2 controles/año</option>
-        <option>Adolescente / alto riesgo: 3 controles/año</option>
-      </select>
-    </div>
-    <div class="f"><label>Fecha próximo control</label><input id="prox" type="date"></div>
-  </div>
 
   <div class="divider"></div>
-  <p style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px">Derivaciones indicadas</p>
+  <p style="font-size:10px;font-weight:700;color:var(--muted);margin-bottom:6px">Derivaciones indicadas</p>
   <div class="der-grid">
     <div class="der-item"><input type="checkbox" id="der_orto"><label for="der_orto">Ortodoncia</label></div>
     <div class="der-item"><input type="checkbox" id="der_cir"><label for="der_cir">Cirugía maxilofacial</label></div>
     <div class="der-item"><input type="checkbox" id="der_endo"><label for="der_endo">Endodoncia</label></div>
     <div class="der-item"><input type="checkbox" id="der_rehab"><label for="der_rehab">Rehabilitación oral</label></div>
-    <div class="der-item"><input type="checkbox" id="der_ttm"><label for="der_ttm">Trastorno temporomandibular y dolor orofacial</label></div>
+    <div class="der-item"><input type="checkbox" id="der_ttm"><label for="der_ttm">TTM y dolor orofacial</label></div>
     <div class="der-item"><input type="checkbox" id="der_ped"><label for="der_ped">Pediatría</label></div>
     <div class="der-item"><input type="checkbox" id="der_orl"><label for="der_orl">Otorrinolaringología</label></div>
     <div class="der-item"><input type="checkbox" id="der_fono"><label for="der_fono">Fonoaudiología</label></div>
     <div class="der-item"><input type="checkbox" id="der_psico"><label for="der_psico">Psicología</label></div>
-    <div class="der-item otros-row">
+    <div class="der-otros">
       <input type="checkbox" id="der_otros">
-      <label for="der_otros" style="flex-shrink:0;white-space:nowrap">Otros:</label>
+      <label for="der_otros" style="white-space:nowrap;font-size:12px">Otros:</label>
       <input type="text" id="der_otros_txt" placeholder="Especificar...">
     </div>
   </div>
-
-  <div class="f" style="margin-top:12px"><label>Plan de acción / observaciones generales</label><textarea id="plan" placeholder="Resumen clínico, acuerdos con paciente y familia, próximas acciones..."></textarea></div>
 </div>
 
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-const KEY='cero_eval_v2';
+const KEY='cero_eval_v3';
 const risks={};
 const RF=['rr_saliva','rr_disc','rr_caries','rr_encias','rr_hig1','rr_hig2','rr_hig3','rr_dieta1','rr_dieta2','rr_dieta3','rr_fluor','rr_motiv'];
-const TF=['nombre','rut','fec_nac','edad','sexo','nombre_social','tipo_control','fec_atencion','profesional','farmaco','ceod_c','ceod_o','ceod_e','ceod_total','ceod_tipo','obs_higiene','obs_dieta','pasta_fluor','dosis_fluor','obs_motiv','obs_hab','frec','prox','plan','der_otros_txt'];
-const CF=['hab_suc','hab_chu','hab_mal','hab_brux','hab_anq','hab_resp','hab_oni','hab_dro','hab_pie','hab_les','der_orto','der_cir','der_endo','der_rehab','der_ttm','der_ped','der_orl','der_fono','der_psico','der_otros'];
+const TF=['nombre','edad','fec_atencion','tipo_control','ceod_val','ceod_tipo','der_otros_txt'];
+const CF=['der_orto','der_cir','der_endo','der_rehab','der_ttm','der_ped','der_orl','der_fono','der_psico','der_otros'];
 
 function sr(gid,v,el){
   risks[gid]=v;
@@ -359,8 +348,10 @@ function recopilar(){
   d.riesgo_total=risks.riesgo_total||'';
   return d;
 }
-function guardar(){localStorage.setItem(KEY,JSON.stringify(recopilar()));toast('Guardado en este navegador ✓')}
+function guardar(){localStorage.setItem(KEY,JSON.stringify(recopilar()));toast('Guardado ✓')}
 function limpiar(){if(!confirm('¿Limpiar todos los campos?'))return;localStorage.removeItem(KEY);location.reload()}
+function imprimirColor(){document.body.classList.remove('bw');window.print()}
+function imprimirBN(){document.body.classList.add('bw');window.print();setTimeout(()=>document.body.classList.remove('bw'),1000)}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
 try{const d=JSON.parse(localStorage.getItem(KEY));if(d)recargar(d)}catch(e){}
 </script>
