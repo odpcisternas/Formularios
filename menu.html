@@ -17,7 +17,7 @@ body{
 }
 
 .container{
-    max-width:800px;
+    max-width:1100px;
     margin:auto;
     padding:40px 20px;
 }
@@ -25,53 +25,70 @@ body{
 h1{
     text-align:center;
     color:#d7dbe2;
-    margin-bottom:40px;
+    margin-bottom:50px;
     font-size:34px;
     line-height:1.3;
 }
 
 .menu{
-    display:flex;
-    flex-direction:column;
-    gap:20px;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:25px;
 }
 
 .item{
     background:#13294b;
-    border-radius:16px;
-    padding:22px;
+    border-radius:18px;
+    padding:30px 20px;
 
     text-decoration:none;
     color:#c9ced6;
 
     display:flex;
-    justify-content:space-between;
+    flex-direction:column;
     align-items:center;
+    justify-content:center;
+
+    text-align:center;
 
     transition:0.2s;
 
     box-shadow:0 4px 12px rgba(0,0,0,0.25);
+
+    min-height:150px;
 }
 
 .item:hover{
     background:#1a3a68;
-    transform:translateY(-2px);
-}
-
-.left{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    font-size:20px;
+    transform:translateY(-4px);
 }
 
 .icon{
-    font-size:26px;
+    font-size:42px;
+    margin-bottom:18px;
 }
 
-.arrow{
-    font-size:24px;
-    color:#9aa3af;
+.text{
+    font-size:18px;
+    line-height:1.4;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .menu{
+        grid-template-columns:repeat(2, 1fr);
+    }
+
+}
+
+@media(max-width:550px){
+
+    .menu{
+        grid-template-columns:1fr;
+    }
+
 }
 
 </style>
@@ -92,12 +109,11 @@ h1{
 
         <a class="item" href="cero_evaluacion.html">
 
-            <div class="left">
-                <span class="icon">📋</span>
-                <span>Evaluación</span>
-            </div>
+            <div class="icon">📋</div>
 
-            <span class="arrow">➜</span>
+            <div class="text">
+                Evaluación
+            </div>
 
         </a>
 
@@ -105,12 +121,11 @@ h1{
 
         <a class="item" href="cero_prevencion.html">
 
-            <div class="left">
-                <span class="icon">🪥</span>
-                <span>Tratamiento preventivo</span>
-            </div>
+            <div class="icon">🪥</div>
 
-            <span class="arrow">➜</span>
+            <div class="text">
+                Tratamiento preventivo
+            </div>
 
         </a>
 
@@ -118,12 +133,11 @@ h1{
 
         <a class="item" href="Consentimiento_Informado_FDP.html">
 
-            <div class="left">
-                <span class="icon">🦷</span>
-                <span>Consentimiento informado FDP</span>
-            </div>
+            <div class="icon">🦷</div>
 
-            <span class="arrow">➜</span>
+            <div class="text">
+                Consentimiento informado FDP
+            </div>
 
         </a>
 
@@ -131,12 +145,11 @@ h1{
 
         <a class="item" href="afiche-tda-1-prevencion.html">
 
-            <div class="left">
-                <span class="icon">🥊</span>
-                <span>Prevención TDA</span>
-            </div>
+            <div class="icon">🥊</div>
 
-            <span class="arrow">➜</span>
+            <div class="text">
+                Prevención TDA
+            </div>
 
         </a>
 
@@ -144,12 +157,11 @@ h1{
 
         <a class="item" href="afiche-tda-2-postcuidados.html">
 
-            <div class="left">
-                <span class="icon">🩹</span>
-                <span>Cuidados TDA</span>
-            </div>
+            <div class="icon">🩹</div>
 
-            <span class="arrow">➜</span>
+            <div class="text">
+                Cuidados TDA
+            </div>
 
         </a>
 
@@ -157,12 +169,11 @@ h1{
 
         <a class="item" href="receta_odontopediatria.html">
 
-            <div class="left">
-                <span class="icon">🧾</span>
-                <span>Receta ODP</span>
-            </div>
+            <div class="icon">🧾</div>
 
-            <span class="arrow">➜</span>
+            <div class="text">
+                Receta ODP
+            </div>
 
         </a>
 
@@ -170,12 +181,11 @@ h1{
 
         <a class="item" href="certificadodientes.html">
 
-            <div class="left">
-                <span class="icon">🐭</span>
-                <span>Certificado entrega dientes</span>
-            </div>
+            <div class="icon">🐭</div>
 
-            <span class="arrow">➜</span>
+            <div class="text">
+                Certificado entrega dientes
+            </div>
 
         </a>
 
@@ -183,12 +193,11 @@ h1{
 
         <a class="item" href="calendariocepillado.png" target="_blank">
 
-            <div class="left">
-                <span class="icon">📅</span>
-                <span>Calendario cepillado</span>
-            </div>
+            <div class="icon">📅</div>
 
-            <span class="arrow">➜</span>
+            <div class="text">
+                Calendario cepillado
+            </div>
 
         </a>
 
