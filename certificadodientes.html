@@ -132,8 +132,29 @@
     box-shadow: 0 3px 10px rgba(249,168,192,0.4);
     transition: background 0.15s, transform 0.1s;
   }
-  .print-btn:hover { background: #f78db0; transform: translateY(-1px); }
+  .print-btn:hover { transform: translateY(-1px); }
   .print-btn:active { transform: translateY(0); }
+  .print-bar { display: flex; gap: 10px; justify-content: center; margin: 10px auto; flex-wrap: wrap; }
+  .print-color { background: #f9a8c0; box-shadow: 0 3px 10px rgba(249,168,192,0.4); }
+  .print-color:hover { background: #f78db0; }
+  .print-bw { background: #555; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
+  .print-bw:hover { background: #333; }
+
+  /* === MODO BLANCO Y NEGRO === */
+  .bw-mode .card { background: #f5f5f5 !important; border-color: #ccc !important; }
+  .bw-mode .blob { background: rgba(0,0,0,0.05) !important; }
+  .bw-mode .fields-row { background: white !important; }
+  .bw-mode .field-input { border-bottom-color: #999 !important; }
+  .bw-mode .declaracion { background: white !important; border-left-color: #888 !important; color: #111 !important; }
+  .bw-mode .estado-bg { background: white !important; }
+  .bw-mode .cb-box { border-color: #999 !important; }
+  .bw-mode .cb-box.checked { background: #555 !important; border-color: #555 !important; }
+  .bw-mode .recompensa-box { background: #444 !important; }
+  .bw-mode .cert-final { background: white !important; border-color: #999 !important; color: #111 !important; }
+  .bw-mode .cert-final strong { color: #111 !important; }
+  .bw-mode .firma-badge { background: #555 !important; }
+  .bw-mode .firma-line { border-top-color: #999 !important; }
+  .bw-mode body { background: white !important; }
 
   @page {
     size: letter portrait;
@@ -293,7 +314,22 @@
   </div>
 </div>
 
-<button class="print-btn" onclick="window.print()">🖨️ Imprimir certificado</button>
+<div class="print-bar">
+  <button class="print-btn print-color" onclick="printColor()">🎨 Imprimir en color</button>
+  <button class="print-btn print-bw" onclick="printBW()">⬛ Imprimir en blanco y negro</button>
+</div>
+
+<script>
+  function printColor() {
+    document.body.classList.remove('bw-mode');
+    window.print();
+  }
+  function printBW() {
+    document.body.classList.add('bw-mode');
+    window.print();
+    setTimeout(() => document.body.classList.remove('bw-mode'), 1000);
+  }
+</script>
 
 <script>
   function toggle(row) {

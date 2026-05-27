@@ -65,12 +65,60 @@
 
   /* BOTÓN */
   .print-btn { display: block; margin: 16px auto; background: #1D9E75; color: white; border: none; border-radius: 24px; padding: 10px 32px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; box-shadow: 0 4px 12px rgba(29,158,117,0.35); transition: background 0.15s, transform 0.1s; }
-  .print-btn:hover { background: #0F6E56; transform: translateY(-1px); }
+  .print-btn:hover { transform: translateY(-1px); }
+  .print-bar { display: flex; gap: 12px; justify-content: center; margin: 16px auto; flex-wrap: wrap; }
+  .print-color { background: #1D9E75; box-shadow: 0 4px 12px rgba(29,158,117,0.35); }
+  .print-color:hover { background: #0F6E56; }
+  .print-bw { background: #444; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  .print-bw:hover { background: #222; }
+
+  /* === MODO BLANCO Y NEGRO === */
+  .bw-mode .hero,
+  .bw-mode .footer { background: #111 !important; }
+  .bw-mode .def-card { background: #f0f0f0 !important; border-left-color: #555 !important; }
+  .bw-mode .def-card .def-label { color: #333 !important; }
+  .bw-mode .def-card .def-value { color: #111 !important; }
+  .bw-mode .prev-item,
+  .bw-mode .hyg-card,
+  .bw-mode .card { background: white !important; border-color: #ccc !important; }
+  .bw-mode .prev-icon { background: #eee !important; filter: grayscale(1); }
+  .bw-mode .dent-card.primaria { background: #f5f5f5 !important; border-color: #bbb !important; }
+  .bw-mode .dent-card.permanente { background: #ececec !important; border-color: #bbb !important; }
+  .bw-mode .primaria .dent-badge { background: #ccc !important; color: #111 !important; }
+  .bw-mode .permanente .dent-badge { background: #bbb !important; color: #111 !important; }
+  .bw-mode .primaria .dent-title,
+  .bw-mode .primaria .dent-steps li,
+  .bw-mode .permanente .dent-title,
+  .bw-mode .permanente .dent-steps li { color: #111 !important; }
+  .bw-mode .primaria .step-num { background: #888 !important; color: white !important; }
+  .bw-mode .permanente .step-num { background: #666 !important; color: white !important; }
+  .bw-mode .emergency-box { background: #f0f0f0 !important; border-color: #999 !important; }
+  .bw-mode .emergency-icon { background: #555 !important; }
+  .bw-mode .emergency-title { color: #111 !important; }
+  .bw-mode .emergency-sub { color: #444 !important; }
+  .bw-mode .e-step { background: white !important; border-color: #ccc !important; }
+  .bw-mode .e-step-num { background: #555 !important; }
+  .bw-mode .e-step-text { color: #111 !important; }
+  .bw-mode .e-step-text .no { color: #333 !important; }
+  .bw-mode .antibiotics-note { background: #f5f5f5 !important; border-left-color: #888 !important; }
+  .bw-mode .antibiotics-note p { color: #111 !important; }
+  .bw-mode .antibiotics-note p strong { color: #333 !important; }
+  .bw-mode .alert-bar { background: #efefef !important; border-color: #bbb !important; }
+  .bw-mode .alert-bar p { color: #111 !important; }
+  .bw-mode .follow-dot { background: #555 !important; }
+  .bw-mode .follow-timeline::before { background: #ccc !important; }
+  .bw-mode .follow-time { color: #111 !important; }
+  .bw-mode .hyg-title { color: #111 !important; }
+  .bw-mode .minsal-badge { background: rgba(255,255,255,0.2) !important; color: #ddd !important; }
 
   @page { size: A4 portrait; margin: 12mm; }
+
+  /* modo BN aplicado al body */
+  body.bw-mode { filter: grayscale(100%) contrast(1.1); }
+
   @media print {
     body { background: white; }
-    .print-btn { display: none; }
+    .print-btns { display: none; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 </style>
@@ -190,6 +238,20 @@
   <p>Ministerio de Salud de Chile · Aprobada por Resolución Exenta N° 1431 · Año 2023</p>
 </footer>
 
-<button class="print-btn" onclick="window.print()">🖨️ Imprimir afiche 2</button>
+<div class="print-bar">
+  <button class="print-btn color" onclick="imprimirColor()">🎨 Imprimir en color</button>
+  <button class="print-btn bw" onclick="imprimirBN()">🖤 Imprimir en blanco y negro</button>
+</div>
+<script>
+  function imprimirColor() {
+    document.body.classList.remove('bn');
+    window.print();
+  }
+  function imprimirBN() {
+    document.body.classList.add('bn');
+    window.print();
+    setTimeout(() => document.body.classList.remove('bn'), 1000);
+  }
+</script>
 </body>
 </html>

@@ -95,14 +95,67 @@
   .footer { background: var(--teal-dark); color: rgba(255,255,255,0.7); text-align: center; padding: 1.5rem; font-size: 0.8rem; line-height: 1.8; }
   .footer strong { color: white; }
 
-  /* BOTÓN IMPRIMIR */
-  .print-btn { display: block; margin: 16px auto; background: #1D9E75; color: white; border: none; border-radius: 24px; padding: 10px 32px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; box-shadow: 0 4px 12px rgba(29,158,117,0.35); transition: background 0.15s, transform 0.1s; }
-  .print-btn:hover { background: #0F6E56; transform: translateY(-1px); }
+  /* BOTONES IMPRIMIR */
+  .print-bar { display: flex; gap: 10px; justify-content: center; margin: 16px auto; }
+  .print-btn { border: none; border-radius: 24px; padding: 10px 28px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; transition: background 0.15s, transform 0.1s; }
+  .print-btn:hover { transform: translateY(-1px); }
+  .print-btn.color { background: #1D9E75; color: white; box-shadow: 0 4px 12px rgba(29,158,117,0.35); }
+  .print-btn.color:hover { background: #0F6E56; }
+  .print-btn.bw { background: #2C2C2A; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  .print-btn.bw:hover { background: #111; }
+
+  /* ESTILOS BLANCO Y NEGRO */
+  body.bn .hero { background: #111 !important; }
+  body.bn .minsal-badge { background: rgba(255,255,255,0.15) !important; color: #ddd !important; border-color: rgba(255,255,255,0.3) !important; }
+  body.bn .hero-num { background: #555 !important; }
+  body.bn .def-card { background: #f0f0f0 !important; border-left-color: #555 !important; }
+  body.bn .def-card .def-label { color: #555 !important; }
+  body.bn .def-card .def-value { color: #111 !important; }
+  body.bn .prev-item { background: #f5f5f5 !important; border-color: #ddd !important; }
+  body.bn .prev-icon { background: #e0e0e0 !important; filter: grayscale(1); }
+  body.bn .dent-card.primaria { background: #f0f0f0 !important; border-color: #bbb !important; }
+  body.bn .dent-card.permanente { background: #e8e8e8 !important; border-color: #bbb !important; }
+  body.bn .primaria .dent-badge { background: #bbb !important; color: #111 !important; }
+  body.bn .permanente .dent-badge { background: #999 !important; color: #fff !important; }
+  body.bn .primaria .dent-title, body.bn .primaria .dent-steps li, body.bn .primaria .dent-age { color: #111 !important; }
+  body.bn .permanente .dent-title, body.bn .permanente .dent-steps li, body.bn .permanente .dent-age { color: #111 !important; }
+  body.bn .primaria .step-num { background: #888 !important; color: #fff !important; }
+  body.bn .permanente .step-num { background: #555 !important; color: #fff !important; }
+  body.bn .emergency-box { background: #f0f0f0 !important; border-color: #aaa !important; }
+  body.bn .emergency-icon { background: #555 !important; }
+  body.bn .emergency-title { color: #111 !important; }
+  body.bn .emergency-sub { color: #444 !important; }
+  body.bn .e-step { background: white !important; border-color: #ccc !important; }
+  body.bn .e-step-num { background: #555 !important; }
+  body.bn .e-step-text { color: #111 !important; }
+  body.bn .e-step-text strong { color: #111 !important; }
+  body.bn .e-step-text .no { color: #333 !important; font-style: italic; }
+  body.bn .antibiotics-note { background: #f0f0f0 !important; border-left-color: #555 !important; }
+  body.bn .antibiotics-note p { color: #111 !important; }
+  body.bn .antibiotics-note p strong { color: #111 !important; }
+  body.bn .hyg-card { background: #f5f5f5 !important; }
+  body.bn .hyg-title { color: #111 !important; }
+  body.bn .hyg-text { color: #333 !important; }
+  body.bn .card { background: white !important; }
+  body.bn .follow-dot { background: #555 !important; border-color: #f0f0f0 !important; }
+  body.bn .follow-timeline::before { background: #ccc !important; }
+  body.bn .follow-time { color: #111 !important; }
+  body.bn .follow-desc { color: #333 !important; }
+  body.bn .alert-bar { background: #f0f0f0 !important; border-color: #aaa !important; }
+  body.bn .alert-bar p { color: #111 !important; }
+  body.bn .footer { background: #111 !important; }
+  body.bn .section-title { color: #111 !important; }
+  body.bn .section-dot { background: #555 !important; }
+  body.bn body { background: white !important; }
 
   @page { size: A4 portrait; margin: 12mm; }
+
+  /* modo BN aplicado al body */
+  body.bw-mode { filter: grayscale(100%) contrast(1.1); }
+
   @media print {
     body { background: white; }
-    .print-btn { display: none; }
+    .print-btns { display: none; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 </style>
@@ -255,6 +308,20 @@
   <p>Ministerio de Salud de Chile · Aprobada por Resolución Exenta N° 1431 · Año 2023</p>
 </footer>
 
-<button class="print-btn" onclick="window.print()">🖨️ Imprimir afiche 1</button>
+<div class="print-bar">
+  <button class="print-btn color" onclick="imprimirColor()">🎨 Imprimir en color</button>
+  <button class="print-btn bw" onclick="imprimirBN()">🖤 Imprimir en blanco y negro</button>
+</div>
+<script>
+  function imprimirColor() {
+    document.body.classList.remove('bn');
+    window.print();
+  }
+  function imprimirBN() {
+    document.body.classList.add('bn');
+    window.print();
+    setTimeout(() => document.body.classList.remove('bn'), 1000);
+  }
+</script>
 </body>
 </html>
