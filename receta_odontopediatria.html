@@ -20,1157 +20,803 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Source Sans 3', sans-serif; background: #d8e2ee; color: var(--texto); }
 
-  body {
-    font-family: 'Source Sans 3', sans-serif;
-    background: #eef3f8;
-    color: var(--texto);
+  /* ══════════════════════════════════════
+     LAYOUT: sidebar izquierdo + preview
+  ══════════════════════════════════════ */
+  .app-shell {
+    display: grid;
+    grid-template-columns: 320px 1fr;
     min-height: 100vh;
   }
 
-  /* ─── PANTALLA PRINCIPAL ─── */
-  .app-wrapper {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 24px 16px 60px;
-  }
-
-  .app-header {
-    text-align: center;
-    margin-bottom: 32px;
-    padding: 28px 20px 20px;
-    background: var(--azul);
-    border-radius: 14px;
-    color: white;
-  }
-
-  .app-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.9rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-  }
-
-  .app-header p {
-    font-size: 0.88rem;
-    opacity: 0.75;
-    margin-top: 4px;
-    font-weight: 300;
-  }
-
-  /* ─── FORMULARIO ─── */
-  .card {
+  /* ── SIDEBAR ── */
+  .sidebar {
     background: white;
-    border-radius: 12px;
-    border: 1px solid var(--borde);
-    padding: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(26,58,92,0.06);
-  }
-
-  .card h2 {
-    font-family: 'Playfair Display', serif;
-    color: var(--azul);
-    font-size: 1.1rem;
-    margin-bottom: 18px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--celeste-claro);
-  }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  .form-group {
+    border-right: 1px solid var(--borde);
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
   }
 
-  .form-group.full { grid-column: 1 / -1; }
-
-  label {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--azul-medio);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  input, select, textarea {
-    padding: 10px 12px;
-    border: 1.5px solid var(--borde);
-    border-radius: 8px;
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 0.95rem;
-    color: var(--texto);
-    background: var(--gris);
-    transition: border-color 0.2s;
-    width: 100%;
-  }
-
-  input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: var(--celeste);
-    background: white;
-  }
-
-  textarea { resize: vertical; min-height: 70px; }
-
-  /* ─── SELECCIÓN DE MEDICAMENTO ─── */
-  .cat-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-
-  .cat-tab {
-    padding: 7px 16px;
-    border-radius: 20px;
-    border: 1.5px solid var(--borde);
-    background: white;
-    cursor: pointer;
-    font-size: 0.84rem;
-    font-weight: 600;
-    color: var(--azul-medio);
-    transition: all 0.18s;
-  }
-
-  .cat-tab.active {
+  .sidebar-header {
     background: var(--azul);
     color: white;
-    border-color: var(--azul);
+    padding: 14px 16px 12px;
+    flex-shrink: 0;
   }
+  .sidebar-header h1 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.2; }
+  .sidebar-header p  { font-size: 0.68rem; opacity: 0.6; margin-top: 2px; }
 
-  .med-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-    max-height: 340px;
+  .sidebar-body {
+    flex: 1;
     overflow-y: auto;
-    padding-right: 4px;
-  }
-
-  .med-card {
-    border: 2px solid var(--borde);
-    border-radius: 10px;
     padding: 12px 14px;
-    cursor: pointer;
-    transition: all 0.18s;
-    background: var(--gris);
-  }
-
-  .med-card:hover { border-color: var(--celeste); background: var(--celeste-claro); }
-
-  .med-card.selected {
-    border-color: var(--azul);
-    background: var(--celeste-claro);
-    box-shadow: 0 0 0 3px rgba(26,58,92,0.12);
-  }
-
-  .med-card .med-nombre {
-    font-weight: 700;
-    font-size: 0.92rem;
-    color: var(--azul);
-    margin-bottom: 3px;
-  }
-
-  .med-card .med-tipo {
-    font-size: 0.75rem;
-    color: #6b7280;
-    font-weight: 400;
-  }
-
-  .med-card .med-conc {
-    font-size: 0.78rem;
-    color: var(--celeste);
-    font-weight: 600;
-    margin-top: 4px;
-  }
-
-  /* ─── RESULTADO DE DOSIS ─── */
-  .dosis-box {
-    background: linear-gradient(135deg, var(--azul) 0%, var(--azul-medio) 100%);
-    color: white;
-    border-radius: 12px;
-    padding: 20px 22px;
-    margin-top: 18px;
-  }
-
-  .dosis-box h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    opacity: 0.85;
-    margin-bottom: 10px;
-  }
-
-  .dosis-valor {
-    font-size: 2.2rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-  }
-
-  .dosis-detalle {
-    font-size: 0.85rem;
-    opacity: 0.8;
-    margin-top: 6px;
-  }
-
-  .dosis-alerta {
-    margin-top: 10px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 0.82rem;
-  }
-
-
-  /* posología */
-  .posologia-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-    margin-top: 14px;
-  }
-
-  .pos-btn {
-    padding: 10px;
-    border: 2px solid var(--borde);
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--azul-medio);
-    background: white;
-    text-align: center;
-    transition: all 0.18s;
-  }
-
-  .pos-btn:hover { border-color: var(--celeste); background: var(--celeste-claro); }
-  .pos-btn.selected { border-color: var(--azul); background: var(--azul); color: white; }
-  .pos-btn small { display: block; font-weight: 300; font-size: 0.75rem; opacity: 0.8; }
-
-  /* ─── BOTONES ACCIÓN ─── */
-  .btn-row {
     display: flex;
+    flex-direction: column;
     gap: 12px;
-    margin-top: 22px;
-    flex-wrap: wrap;
   }
 
-  .btn {
-    padding: 11px 24px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: all 0.18s;
+  .sec-label {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.7px; color: var(--azul-medio);
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 7px;
+  }
+  .sec-label::after { content:''; flex:1; height:1px; background: var(--borde); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  .span2  { grid-column: 1/-1; }
+  .fg     { display: flex; flex-direction: column; gap: 3px; }
+
+  label { font-size: 0.68rem; font-weight: 600; color: var(--azul-medio); text-transform: uppercase; letter-spacing: 0.4px; }
+
+  input, select, textarea {
+    padding: 6px 8px; border: 1.5px solid var(--borde); border-radius: 6px;
+    font-family: 'Source Sans 3', sans-serif; font-size: 0.86rem; color: var(--texto);
+    background: var(--gris); width: 100%; transition: border-color 0.18s;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--celeste); background: white; }
+  textarea { resize: vertical; min-height: 48px; }
+
+  /* lista meds */
+  .meds-lista { display: flex; flex-direction: column; gap: 7px; }
+  .med-item {
+    border: 1.5px solid var(--borde); border-radius: 7px; padding: 8px 10px;
+    background: var(--gris); display: flex; gap: 7px; align-items: flex-start;
+  }
+  .med-item-info { flex: 1; min-width: 0; }
+  .med-item-nombre { font-weight: 700; color: var(--azul); font-size: 0.82rem; }
+  .med-item-pres   { font-size: 0.72rem; color: #6b7280; margin-top: 1px; }
+  .med-item-dosis  {
+    display: inline-block; margin-top: 3px; padding: 1px 7px;
+    background: var(--azul); color: white; border-radius: 20px; font-size: 0.68rem; font-weight: 600;
+  }
+  .med-item-ind    { font-size: 0.71rem; color: #4b5563; margin-top: 3px; white-space: pre-wrap; }
+  .med-item-alerta { font-size: 0.68rem; color: var(--rojo); margin-top: 2px; }
+  .btn-eliminar {
+    background: none; border: 1.5px solid #fca5a5; color: var(--rojo); border-radius: 5px;
+    padding: 2px 6px; cursor: pointer; font-size: 0.68rem; font-weight: 700; flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .btn-eliminar:hover { background: #fee2e2; }
+
+  .btn-agregar {
+    width: 100%; padding: 8px; border: 2px dashed var(--celeste); border-radius: 7px;
+    background: var(--celeste-claro); color: var(--azul-medio); font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.18s; margin-top: 2px;
+  }
+  .btn-agregar:hover { background: #c5e4f0; border-color: var(--azul-medio); }
+
+  /* acciones sidebar */
+  .sidebar-footer {
+    padding: 10px 14px 14px;
+    border-top: 1px solid var(--borde);
+    flex-shrink: 0;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 7px;
   }
-
-  .btn-primary { background: var(--azul); color: white; }
-  .btn-primary:hover { background: var(--azul-medio); }
-  .btn-secondary { background: white; color: var(--azul); border: 2px solid var(--borde); }
+  .btn {
+    padding: 8px 14px; border-radius: 7px; border: none; cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif; font-size: 0.84rem; font-weight: 600;
+    transition: all 0.18s; display: flex; align-items: center; justify-content: center; gap: 5px; width: 100%;
+  }
+  .btn-primary   { background: var(--azul); color: white; }
+  .btn-primary:hover  { background: var(--azul-medio); }
+  .btn-success   { background: var(--verde); color: white; }
+  .btn-success:hover  { background: #166638; }
+  .btn-secondary { background: white; color: var(--azul); border: 1.5px solid var(--borde); }
   .btn-secondary:hover { border-color: var(--celeste); }
-  .btn-success { background: var(--verde); color: white; }
+  .btn-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 
-  /* ─── RECETA PREVIEW (para impresión y copia) ─── */
-  #receta-preview {
-    display: none;
-    background: white;
-    border: 1px solid var(--borde);
-    border-radius: 12px;
-    padding: 30px 34px;
-    margin-top: 24px;
-  }
-
-  .receta-header {
+  /* ══════════════════════════════════════
+     ÁREA PREVIEW
+  ══════════════════════════════════════ */
+  .preview-area {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding-bottom: 14px;
-    border-bottom: 2px solid var(--azul);
-    margin-bottom: 18px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px 40px;
+    gap: 14px;
   }
 
-  .receta-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    color: var(--azul);
-    font-weight: 700;
+  /* toolbar */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 660px;
+  }
+  .toolbar-title { font-family: 'Playfair Display', serif; color: var(--azul); font-size: 0.95rem; flex: 1; }
+
+  .toggle-bw {
+    display: flex; align-items: center; gap: 5px;
+    background: white; border: 1.5px solid var(--borde); border-radius: 20px;
+    padding: 5px 11px; cursor: pointer; font-size: 0.75rem; font-weight: 600;
+    color: var(--azul-medio); transition: all 0.18s; user-select: none;
+  }
+  .toggle-bw:hover { border-color: var(--celeste); }
+  .toggle-bw.bw-on { background: #374151; color: white; border-color: #374151; }
+
+  .print-group { display: flex; gap: 6px; }
+  .pbtn {
+    padding: 6px 12px; border-radius: 7px; border: none; cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif; font-size: 0.78rem; font-weight: 600;
+    display: flex; align-items: center; gap: 4px; transition: all 0.18s;
+  }
+  .pbtn-color { background: var(--azul); color: white; }
+  .pbtn-color:hover { background: var(--azul-medio); }
+  .pbtn-bw    { background: #374151; color: white; }
+  .pbtn-bw:hover  { background: #1f2937; }
+  .pbtn-copy  { background: var(--verde); color: white; }
+  .pbtn-copy:hover { background: #166638; }
+
+  /* ══════════════════════════════════════
+     HOJA CARTA  (A4/Carta ≈ 660px @ 96dpi)
+  ══════════════════════════════════════ */
+  .hoja {
+    width: 660px;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border-radius: 3px;
+    padding: 28px 34px 26px;
+    font-size: 10.5pt;
+    line-height: 1.45;
+    position: relative;
   }
 
-  .receta-logo span {
-    display: block;
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 400;
-    color: #6b7280;
+  /* estado vacío */
+  .hoja-empty {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; min-height: 580px; color: #9ca3af; gap: 10px;
   }
+  .hoja-empty .ico { font-size: 2.8rem; }
+  .hoja-empty p { font-size: 0.84rem; text-align: center; max-width: 240px; line-height: 1.5; }
 
-  .receta-datos-medico {
-    text-align: right;
-    font-size: 0.82rem;
-    color: var(--azul-medio);
+  /* ── cabecera receta ── */
+  .rp-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding-bottom: 9px; border-bottom: 2.5px solid var(--azul); margin-bottom: 10px;
   }
+  .rp-titulo  { font-family: 'Playfair Display', serif; font-size: 12.5pt; font-weight: 700; color: var(--azul); }
+  .rp-subtit  { font-size: 8pt; color: #6b7280; margin-top: 1px; }
+  .rp-medico  { text-align: right; font-size: 8pt; color: var(--azul-medio); line-height: 1.4; }
 
-  .receta-paciente {
-    background: var(--gris);
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 0.87rem;
-    margin-bottom: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 6px 20px;
+  /* ── datos paciente ── */
+  .rp-paciente {
+    display: grid; grid-template-columns: 2fr 1.1fr 1.1fr;
+    gap: 3px 10px; padding: 7px 10px;
+    background: var(--gris); border: 1px solid var(--borde);
+    border-radius: 5px; margin-bottom: 12px;
   }
+  .rp-dato strong { display: block; font-size: 6.5pt; text-transform: uppercase; letter-spacing: 0.4px; color: var(--azul-medio); }
+  .rp-dato span   { font-size: 9pt; }
 
-  .receta-paciente .dato { }
-  .receta-paciente .dato strong { color: var(--azul-medio); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.3px; display: block; }
+  /* ── cuerpo ── */
+  .rp-symbol { font-family: 'Playfair Display', serif; font-size: 15pt; color: var(--azul); margin-bottom: 6px; }
 
-  .receta-rp {
-    margin-bottom: 16px;
+  .rp-med-item { padding: 7px 0; border-bottom: 1px solid var(--borde); }
+  .rp-med-item:last-child { border-bottom: none; }
+  .rp-med-num    { font-size: 7pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--celeste); margin-bottom: 2px; }
+  .rp-med-nombre { font-family: 'Playfair Display', serif; font-size: 11.5pt; font-weight: 700; color: var(--azul); }
+  .rp-med-pres   { font-size: 8.5pt; color: #6b7280; margin-top: 1px; }
+  .rp-med-ind    { font-size: 9pt; color: #374151; margin-top: 5px; white-space: pre-wrap; line-height: 1.5; }
+
+  /* ── pie ── */
+  .rp-footer {
+    margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px; padding-top: 11px; border-top: 1px solid var(--borde);
   }
+  .rp-firma-linea { border-top: 1px solid #333; margin-top: 42px; padding-top: 5px; font-size: 7.5pt; color: #4b5563; text-align: center; }
+  .rp-fecha       { text-align: right; font-size: 8pt; color: #6b7280; padding-top: 4px; }
 
-  .receta-rp .rp-symbol {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    color: var(--azul);
-    margin-bottom: 8px;
+  /* ══════════════════════════════════════
+     MODAL
+  ══════════════════════════════════════ */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(10,24,44,0.6);
+    z-index: 300; justify-content: center; align-items: flex-start;
+    padding: 20px 14px; overflow-y: auto;
   }
-
-  .receta-med-nombre {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--azul);
-    font-family: 'Playfair Display', serif;
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white; border-radius: 13px; padding: 22px; width: 100%; max-width: 680px;
+    box-shadow: 0 18px 55px rgba(0,0,0,0.28); position: relative; margin: auto;
   }
-
-  .receta-med-presentacion {
-    font-size: 0.87rem;
-    color: #6b7280;
-    margin-bottom: 8px;
+  .modal h3 { font-family: 'Playfair Display', serif; color: var(--azul); font-size: 1.05rem; margin-bottom: 14px; }
+  .modal-close {
+    position: absolute; top: 13px; right: 13px; background: none; border: none;
+    font-size: 1.15rem; cursor: pointer; color: #9ca3af; line-height: 1;
   }
+  .modal-close:hover { color: var(--texto); }
 
-  .receta-instruccion {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    padding: 10px 14px;
-    border-left: 3px solid var(--celeste);
-    background: var(--celeste-claro);
-    border-radius: 0 6px 6px 0;
-    margin-top: 8px;
+  .cat-tabs { display: flex; gap: 5px; margin-bottom: 11px; flex-wrap: wrap; }
+  .cat-tab {
+    padding: 4px 11px; border-radius: 20px; border: 1.5px solid var(--borde);
+    background: white; cursor: pointer; font-size: 0.75rem; font-weight: 600; color: var(--azul-medio); transition: all 0.15s;
   }
+  .cat-tab.active { background: var(--azul); color: white; border-color: var(--azul); }
 
-  .receta-indicaciones {
-    margin-top: 16px;
-    font-size: 0.87rem;
-    border: 1px dashed var(--borde);
-    border-radius: 6px;
-    padding: 10px 14px;
-    color: #4b5563;
-    white-space: pre-wrap;
+  .med-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(165px,1fr));
+    gap: 6px; max-height: 200px; overflow-y: auto; margin-bottom: 13px;
   }
-
-  .receta-footer {
-    margin-top: 30px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding-top: 16px;
-    border-top: 1px solid var(--borde);
+  .med-card {
+    border: 2px solid var(--borde); border-radius: 8px; padding: 8px 10px;
+    cursor: pointer; transition: all 0.15s; background: var(--gris);
   }
+  .med-card:hover    { border-color: var(--celeste); background: var(--celeste-claro); }
+  .med-card.selected { border-color: var(--azul); background: var(--celeste-claro); box-shadow: 0 0 0 2px rgba(26,58,92,0.1); }
+  .mc-nombre { font-weight: 700; font-size: 0.82rem; color: var(--azul); }
+  .mc-tipo   { font-size: 0.69rem; color: #6b7280; margin-top: 1px; }
 
-  .firma-box {
-    text-align: center;
+  .dosis-box {
+    background: linear-gradient(135deg, var(--azul), var(--azul-medio));
+    color: white; border-radius: 9px; padding: 13px 15px; margin: 11px 0;
   }
+  .dosis-box h4  { font-size: 0.75rem; opacity: 0.78; margin-bottom: 4px; }
+  .dosis-valor   { font-size: 1.85rem; font-weight: 700; }
+  .dosis-detalle { font-size: 0.76rem; opacity: 0.76; margin-top: 3px; }
+  .dosis-alerta  { margin-top: 7px; background: rgba(255,255,255,0.15); border-radius: 5px; padding: 5px 9px; font-size: 0.74rem; }
 
-  .firma-linea {
-    border-top: 1px solid #333;
-    margin-top: 40px;
-    padding-top: 6px;
-    font-size: 0.8rem;
-    color: #4b5563;
+  .pos-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 6px; }
+  .pos-btn {
+    padding: 7px; border: 2px solid var(--borde); border-radius: 7px; cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif; font-size: 0.76rem; font-weight: 600;
+    color: var(--azul-medio); background: white; text-align: center; transition: all 0.15s;
   }
+  .pos-btn:hover    { border-color: var(--celeste); background: var(--celeste-claro); }
+  .pos-btn.selected { border-color: var(--azul); background: var(--azul); color: white; }
+  .pos-btn small    { display: block; font-weight: 300; font-size: 0.67rem; opacity: 0.82; }
 
-  .receta-fecha {
-    text-align: right;
-    font-size: 0.8rem;
-    color: #6b7280;
-    margin-top: 14px;
+  .modal-actions { display: flex; gap: 9px; margin-top: 13px; }
+  .mbtn {
+    padding: 8px 18px; border-radius: 7px; border: none; cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif; font-size: 0.84rem; font-weight: 600; transition: all 0.18s;
   }
+  .mbtn-ok  { background: var(--azul); color: white; }
+  .mbtn-ok:hover  { background: var(--azul-medio); }
+  .mbtn-can { background: white; color: var(--azul); border: 1.5px solid var(--borde); }
+  .mbtn-can:hover { border-color: var(--celeste); }
 
-  /* ─── PRINT ─── */
+  /* ══════════════════════════════════════
+     IMPRESIÓN
+  ══════════════════════════════════════ */
   @media print {
-    body { background: white; }
-    .app-header, .card, .btn-row, #receta-preview .btn-row { display: none !important; }
-    #receta-preview { display: block !important; border: none; padding: 10px; box-shadow: none; }
-    .no-print { display: none !important; }
+    @page { size: letter; margin: 15mm 18mm; }
+
+    body { background: white !important; }
+    .sidebar, .toolbar, .modal-overlay { display: none !important; }
+    .app-shell { display: block !important; }
+    .preview-area { padding: 0 !important; align-items: stretch !important; background: white !important; }
+    .hoja {
+      width: 100% !important; box-shadow: none !important; border-radius: 0 !important;
+      padding: 0 !important; font-size: 10.5pt !important;
+    }
+    .hoja-empty { display: none !important; }
+
+    /* COLOR */
+    body.print-color .rp-titulo,
+    body.print-color .rp-symbol,
+    body.print-color .rp-med-nombre { color: var(--azul) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body.print-color .rp-header { border-bottom-color: var(--azul) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body.print-color .rp-paciente { background: #f0f5fa !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body.print-color .rp-med-num  { color: var(--celeste) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body.print-color .rp-medico,
+    body.print-color .rp-dato strong { color: var(--azul-medio) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    /* B&N */
+    body.print-bw .rp-titulo,
+    body.print-bw .rp-symbol,
+    body.print-bw .rp-med-nombre { color: #000 !important; }
+    body.print-bw .rp-header { border-bottom-color: #000 !important; border-bottom-width: 2px !important; }
+    body.print-bw .rp-paciente { background: #f0f0f0 !important; border: 1px solid #bbb !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body.print-bw .rp-med-num  { color: #555 !important; }
+    body.print-bw .rp-medico,
+    body.print-bw .rp-dato strong { color: #333 !important; }
+    body.print-bw .rp-med-pres,
+    body.print-bw .rp-med-ind,
+    body.print-bw .rp-fecha  { color: #222 !important; }
   }
 
-  /* ─── UTILS ─── */
   .hidden { display: none !important; }
-  .alerta { color: var(--rojo); font-size: 0.82rem; font-weight: 600; margin-top: 6px; }
 </style>
 </head>
-<body>
+<body class="print-color">
 
-<div class="app-wrapper">
+<div class="app-shell">
 
-  <div class="app-header">
-    <h1>Recetario Odontopediátrico</h1>
-    <p>Cálculo automático de dosis por peso · Medicamentos disponibles en farmacias chilenas</p>
-  </div>
-
-  <!-- DATOS DEL MÉDICO -->
-  <div class="card">
-    <h2>Datos del Profesional</h2>
-    <div class="form-grid">
-      <div class="form-group">
-        <label>Nombre del profesional</label>
-        <input type="text" id="med-nombre" placeholder="Dr./Dra. Nombre Apellido">
-      </div>
-      <div class="form-group">
-        <label>RUT / Número de registro</label>
-        <input type="text" id="med-rut" placeholder="12.345.678-9">
-      </div>
-      <div class="form-group full">
-        <label>Dirección / Centro de salud</label>
-        <input type="text" id="med-direccion" placeholder="Clínica / Hospital / Consultorio">
-      </div>
-    </div>
-  </div>
-
-  <!-- DATOS DEL PACIENTE -->
-  <div class="card">
-    <h2>Datos del Paciente</h2>
-    <div class="form-grid">
-      <div class="form-group">
-        <label>Nombre del paciente</label>
-        <input type="text" id="pac-nombre" placeholder="Nombre Apellido">
-      </div>
-      <div class="form-group">
-        <label>RUT</label>
-        <input type="text" id="pac-rut" placeholder="12.345.678-9">
-      </div>
-      <div class="form-group">
-        <label>Edad</label>
-        <input type="text" id="pac-edad" placeholder="Ej: 4 años">
-      </div>
-      <div class="form-group">
-        <label>Peso (kg)</label>
-        <input type="number" id="pac-peso" placeholder="Ej: 18" min="2" max="100" step="0.1" oninput="calcularDosis()">
-      </div>
-    </div>
-  </div>
-
-  <!-- SELECCIÓN DE MEDICAMENTO -->
-  <div class="card">
-    <h2>Seleccionar Medicamento</h2>
-
-    <div class="cat-tabs">
-      <button class="cat-tab active" onclick="filtrarCategoria('todos')">Todos</button>
-      <button class="cat-tab" onclick="filtrarCategoria('analgesico')">Analgésicos</button>
-      <button class="cat-tab" onclick="filtrarCategoria('aine')">AINEs</button>
-      <button class="cat-tab" onclick="filtrarCategoria('antibiotico')">Antibióticos</button>
-      <button class="cat-tab" onclick="filtrarCategoria('antifungico')">Antifúngicos</button>
-      <button class="cat-tab" onclick="filtrarCategoria('antiviral')">Antivirales</button>
+  <!-- ════════════ SIDEBAR ════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>Recetario Odontopediátrico</h1>
+      <p>Cálculo de dosis · Múltiples medicamentos</p>
     </div>
 
-    <div class="med-grid" id="med-grid"></div>
+    <div class="sidebar-body">
 
-    <!-- Concentración / presentación seleccionada -->
-    <div id="conc-selector" class="hidden" style="margin-top:14px;">
-      <label>Seleccionar presentación</label>
-      <select id="conc-select" onchange="calcularDosis()" style="margin-top:6px;">
-      </select>
-    </div>
-
-    <!-- Posología / frecuencia -->
-    <div id="posologia-section" class="hidden" style="margin-top:16px;">
-      <label>Frecuencia de administración</label>
-      <div class="posologia-grid" id="posologia-grid"></div>
-    </div>
-
-    <!-- Resultado -->
-    <div id="dosis-resultado" class="hidden">
-      <div class="dosis-box">
-        <h3>Dosis por toma</h3>
-        <div class="dosis-valor" id="dosis-ml">— ml</div>
-        <div class="dosis-detalle" id="dosis-detalle"></div>
-        <div class="dosis-alerta" id="dosis-alerta-box" style="display:none"></div>
+      <!-- Profesional -->
+      <div>
+        <div class="sec-label">Profesional</div>
+        <div class="grid2">
+          <div class="fg">
+            <label>Nombre</label>
+            <input type="text" id="med-nombre" placeholder="Dr./Dra. Apellido">
+          </div>
+          <div class="fg">
+            <label>RUT / Reg.</label>
+            <input type="text" id="med-rut" placeholder="12.345.678-9">
+          </div>
+          <div class="fg span2">
+            <label>Centro / Dirección</label>
+            <input type="text" id="med-direccion" placeholder="Clínica / Consultorio">
+          </div>
+        </div>
       </div>
 
-    </div>
-
-    <!-- Indicaciones adicionales -->
-    <div id="indicaciones-section" class="hidden" style="margin-top:16px;">
-      <div class="form-group">
-        <label>Indicaciones / Días de tratamiento</label>
-        <textarea id="indicaciones" placeholder="Ej: Administrar con alimentos. Duración 7 días. Guardar en refrigeración una vez abierto."></textarea>
+      <!-- Paciente -->
+      <div>
+        <div class="sec-label">Paciente</div>
+        <div class="grid2">
+          <div class="fg span2">
+            <label>Nombre completo</label>
+            <input type="text" id="pac-nombre" placeholder="Nombre Apellido">
+          </div>
+          <div class="fg">
+            <label>RUT</label>
+            <input type="text" id="pac-rut" placeholder="12.345.678-9">
+          </div>
+          <div class="fg">
+            <label>Edad</label>
+            <input type="text" id="pac-edad" placeholder="Ej: 4 años">
+          </div>
+          <div class="fg span2">
+            <label>Peso (kg)</label>
+            <input type="number" id="pac-peso" placeholder="Ej: 18" min="2" max="100" step="0.1">
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="btn-row">
+      <!-- Medicamentos -->
+      <div style="flex:1;">
+        <div class="sec-label">Medicamentos</div>
+        <div class="meds-lista" id="meds-lista">
+          <p id="meds-empty" style="color:#9ca3af;font-size:0.75rem;text-align:center;padding:8px 0;">
+            Sin medicamentos. Agrega uno abajo.
+          </p>
+        </div>
+        <button class="btn-agregar" onclick="abrirModal()">＋ Agregar medicamento</button>
+      </div>
+
+    </div><!-- /sidebar-body -->
+
+    <div class="sidebar-footer">
       <button class="btn btn-primary" onclick="generarReceta()">📄 Generar Receta</button>
-      <button class="btn btn-secondary" onclick="limpiarForm()">🗑 Limpiar</button>
+      <div class="btn-row2">
+        <button class="btn btn-success" onclick="copiarReceta()">📋 Copiar texto</button>
+        <button class="btn btn-secondary" onclick="limpiarTodo()">🗑 Limpiar</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ════════════ PREVIEW ════════════ -->
+  <main class="preview-area">
+
+    <!-- toolbar -->
+    <div class="toolbar">
+      <span class="toolbar-title">Vista previa · Hoja carta</span>
+      <button class="toggle-bw" id="btn-toggle-bw" onclick="toggleVistaColor()">⬜ Ver en B&amp;N</button>
+      <div class="print-group">
+        <button class="pbtn pbtn-color" onclick="imprimirColor()">🖨 Color</button>
+        <button class="pbtn pbtn-bw"    onclick="imprimirBN()">🖨 B&amp;N</button>
+        <button class="pbtn pbtn-copy"  onclick="copiarReceta()">📋 Copiar</button>
+      </div>
+    </div>
+
+    <!-- hoja -->
+    <div class="hoja" id="hoja">
+
+      <!-- estado vacío -->
+      <div class="hoja-empty" id="hoja-empty">
+        <div class="ico">📋</div>
+        <p>Completa los datos y presiona <strong>Generar Receta</strong> para ver la vista previa aquí.</p>
+      </div>
+
+      <!-- contenido receta -->
+      <div id="hoja-contenido" class="hidden">
+
+        <div class="rp-header">
+          <div>
+            <div class="rp-titulo">Receta Médica · Odontopediatría</div>
+            <div class="rp-subtit" id="rp-clinica"></div>
+          </div>
+          <div class="rp-medico" id="rp-medico"></div>
+        </div>
+
+        <div class="rp-paciente" id="rp-paciente"></div>
+
+        <div class="rp-symbol">Rp/</div>
+        <div id="rp-meds-lista"></div>
+
+        <div class="rp-footer">
+          <div><div class="rp-firma-linea" id="rp-firma">Firma y Timbre</div></div>
+          <div><div class="rp-fecha" id="rp-fecha"></div></div>
+        </div>
+
+      </div><!-- /hoja-contenido -->
+    </div><!-- /hoja -->
+
+  </main>
+
+</div><!-- /app-shell -->
+
+<!-- ════════════ MODAL ════════════ -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="cerrarModal()">✕</button>
+    <h3>Agregar Medicamento</h3>
+
+    <div class="cat-tabs" id="modal-cat-tabs">
+      <button class="cat-tab active" onclick="filtrarCat('todos',this)">Todos</button>
+      <button class="cat-tab" onclick="filtrarCat('analgesico',this)">Analgésicos</button>
+      <button class="cat-tab" onclick="filtrarCat('aine',this)">AINEs</button>
+      <button class="cat-tab" onclick="filtrarCat('antibiotico',this)">Antibióticos</button>
+      <button class="cat-tab" onclick="filtrarCat('antifungico',this)">Antifúngicos</button>
+      <button class="cat-tab" onclick="filtrarCat('antiviral',this)">Antivirales</button>
+    </div>
+
+    <div class="med-grid" id="modal-med-grid"></div>
+
+    <div id="modal-pres-sec" class="hidden" style="margin-bottom:9px;">
+      <label>Presentación</label>
+      <select id="modal-pres-select" onchange="modalCalcDosis()" style="margin-top:4px;"></select>
+    </div>
+
+    <div id="modal-frec-sec" class="hidden" style="margin-bottom:4px;">
+      <label>Frecuencia</label>
+      <div class="pos-grid" id="modal-frec-grid"></div>
+    </div>
+
+    <div id="modal-dosis-box" class="hidden">
+      <div class="dosis-box">
+        <h4>Dosis por toma</h4>
+        <div class="dosis-valor"  id="modal-dosis-valor">—</div>
+        <div class="dosis-detalle" id="modal-dosis-detalle"></div>
+        <div class="dosis-alerta"  id="modal-dosis-alerta" style="display:none"></div>
+      </div>
+    </div>
+
+    <div id="modal-ind-sec" class="hidden" style="margin-top:11px;">
+      <div class="fg">
+        <label>Indicaciones</label>
+        <textarea id="modal-indicaciones" placeholder="Ej: Administrar con alimentos. Duración 7 días."></textarea>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="mbtn mbtn-ok"  onclick="agregarMed()">✓ Agregar a la receta</button>
+      <button class="mbtn mbtn-can" onclick="cerrarModal()">Cancelar</button>
     </div>
   </div>
-
-  <!-- RECETA GENERADA -->
-  <div id="receta-preview">
-    <div class="receta-header">
-      <div class="receta-logo">
-        Receta Médica · Odontopediatría
-        <span id="rp-clinica"></span>
-      </div>
-      <div class="receta-datos-medico" id="rp-medico"></div>
-    </div>
-
-    <div class="receta-paciente" id="rp-paciente"></div>
-
-    <div class="receta-rp">
-      <div class="rp-symbol">Rp/</div>
-      <div class="receta-med-nombre" id="rp-med-nombre"></div>
-      <div class="receta-med-presentacion" id="rp-med-pres"></div>
-    </div>
-
-    <div class="receta-indicaciones" id="rp-indicaciones" style="display:none"></div>
-
-    <div class="receta-footer">
-      <div class="firma-box">
-        <div class="firma-linea" id="rp-firma-nombre">Firma y Timbre</div>
-      </div>
-      <div style="text-align:right;">
-        <div class="receta-fecha" id="rp-fecha"></div>
-      </div>
-    </div>
-
-    <div class="btn-row no-print" style="margin-top:20px;">
-      <button class="btn btn-primary" onclick="imprimirReceta()">🖨 Imprimir</button>
-      <button class="btn btn-success" onclick="copiarReceta()">📋 Copiar texto</button>
-      <button class="btn btn-secondary" onclick="cerrarReceta()">✕ Cerrar</button>
-    </div>
-  </div>
-
-</div><!-- /app-wrapper -->
+</div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-//  BASE DE DATOS DE MEDICAMENTOS
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// BASE DE DATOS
+// ══════════════════════════════════════════════
 const MEDICAMENTOS = [
-
-  // ── ANALGÉSICOS ──
-  {
-    id: 'paracetamol',
-    nombre: 'Paracetamol',
-    categoria: 'analgesico',
-    tipo: 'Analgésico / Antipirético',
-    esAnalgesico: true, // dosis por toma directamente
-    dosis_mg_kg: { min: 10, max: 15 },
-    dosis_max_dia_mg: 2600,
-    frecuencias: [
-      { label: 'Cada 6h', horas: 6 },
-      { label: 'Cada 8h', horas: 8 },
-    ],
-    presentaciones: [
-      { label: 'Jarabe 120 mg/5 ml', mgPorMl: 24 },
-      { label: 'Jarabe 150 mg/5 ml (Winasorb)', mgPorMl: 30 },
-      { label: 'Jarabe 160 mg/5 ml (Panadol)', mgPorMl: 32 },
-      { label: 'Gotas 100 mg/ml', mgPorMl: 100 },
-    ],
-    marcas: [
-      { nombre: 'Kitadol Infantil Jarabe', farmacia: 'Ahumada / Cruz Verde / Salcobrand' },
-      { nombre: 'Panadol Infantil Jarabe', farmacia: 'Cruz Verde / Salcobrand' },
-      { nombre: 'Winasorb Infantil Jarabe', farmacia: 'Salcobrand' },
-      { nombre: 'Tapsin Infantil Gotas', farmacia: 'Ahumada / Cruz Verde' },
-      { nombre: 'Genérico 500 mg comp.', farmacia: 'Ahumada / Cruz Verde / Salcobrand' },
-    ],
-    nota: 'No superar 5 dosis/día. Riesgo de daño hepático en uso prolongado.',
-    instruccion_base: 'Administrar por vía oral',
-  },
-
-  // ── AINEs ──
-  {
-    id: 'ibuprofeno',
-    nombre: 'Ibuprofeno',
-    categoria: 'aine',
-    tipo: 'AINE – Antiinflamatorio / Analgésico',
-    esAnalgesico: true,
-    dosis_mg_kg: { min: 5, max: 10 },
-    dosis_max_dia_mg: 40, // mg/kg/día (se calcula aparte)
-    frecuencias: [
-      { label: 'Cada 6h', horas: 6 },
-      { label: 'Cada 8h', horas: 8 },
-    ],
-    presentaciones: [
-      { label: 'Suspensión 100 mg/5 ml', mgPorMl: 20 },
-      { label: 'Suspensión 200 mg/5 ml (Forte)', mgPorMl: 40 },
-      { label: 'Comprimidos 200 mg', mgPorMl: null, esComprimido: true, mgComp: 200 },
-      { label: 'Comprimidos 400 mg', mgPorMl: null, esComprimido: true, mgComp: 400 },
-    ],
-    marcas: [
-      { nombre: 'Pironal Forte Susp.', farmacia: 'Cruz Verde / Salcobrand' },
-      { nombre: 'Genérico Ibuprofeno Susp. 100 mg/5ml', farmacia: 'Ahumada / Cruz Verde / Salcobrand' },
-      { nombre: 'Genérico Ibuprofeno 400 mg comp.', farmacia: 'Ahumada (BE)' },
-      { nombre: 'Genérico Ibuprofeno 600 mg comp.', farmacia: 'Ahumada (BE)' },
-    ],
-    nota: '⚠ Dar con o después de comidas. No usar en <6 meses. No combinar con otro AINE.',
-    instruccion_base: 'Administrar con alimentos',
-  },
-
-  {
-    id: 'diclofenaco',
-    nombre: 'Diclofenaco',
-    categoria: 'aine',
-    tipo: 'AINE alternativo (>10 kg)',
-    esAnalgesico: true,
-    dosis_mg_kg: { min: 0.5, max: 2 },
-    dosis_max_dia_mg: null,
-    frecuencias: [
-      { label: 'Cada 8h', horas: 8 },
-      { label: 'Cada 12h', horas: 12 },
-    ],
-    presentaciones: [
-      { label: 'Gotas 15 mg/ml (1 ml = 24 gotas)', mgPorMl: 15, esGotas: true, gotasPorMl: 24 },
-      { label: 'Comprimidos 25 mg', mgPorMl: null, esComprimido: true, mgComp: 25 },
-    ],
-    marcas: [
-      { nombre: 'Lertus Gotas', farmacia: 'Cruz Verde / Salcobrand' },
-      { nombre: 'Genérico Diclofenaco 25 mg comp.', farmacia: 'Ahumada / Cruz Verde / Salcobrand' },
-    ],
-    nota: 'Solo en niños >10 kg. Dar con comidas. Alternativa si ibuprofeno no fue efectivo.',
-    instruccion_base: 'Administrar con alimentos',
-  },
-
-  // ── ANTIBIÓTICOS ──
-  {
-    id: 'amoxicilina',
-    nombre: 'Amoxicilina',
-    categoria: 'antibiotico',
-    tipo: 'Antibiótico – Primera elección',
-    esAnalgesico: false, // ml/día → dividir por dosis
-    dosis_mg_kg_dia: 50,
-    dosis_max_dosis_mg: 500,
-    frecuencias: [
-      { label: 'Cada 8h', horas: 8, dosisAlDia: 3 },
-      { label: 'Cada 12h', horas: 12, dosisAlDia: 2 },
-    ],
-    presentaciones: [
-      { label: 'Suspensión 125 mg/5 ml', mgPorMl: 25 },
-      { label: 'Suspensión 250 mg/5 ml', mgPorMl: 50 },
-      { label: 'Suspensión 500 mg/5 ml', mgPorMl: 100 },
-    ],
-    marcas: [
-      { nombre: 'Amoval Susp. 250 mg/5ml', farmacia: 'Cruz Verde / Salcobrand' },
-      { nombre: 'Amoval Susp. 500 mg/5ml', farmacia: 'Cruz Verde / Salcobrand' },
-      { nombre: 'Genérico Amoxicilina Susp.', farmacia: 'Ahumada / Cruz Verde / Salcobrand' },
-      { nombre: 'Genérico Amoxicilina 500 mg caps.', farmacia: 'Ahumada (BE)' },
-    ],
-    nota: 'Tope: 500 mg/dosis independiente del peso. El tope es la dosis de adulto.',
-    instruccion_base: 'Administrar con o sin alimentos',
-    duracion: '5–7 días',
-  },
-
-  {
-    id: 'amoxicilina_clavulanico',
-    nombre: 'Amoxicilina + Ác. Clavulánico',
-    categoria: 'antibiotico',
-    tipo: 'Antibiótico – Segunda elección / celulitis',
-    esAnalgesico: false,
-    dosis_mg_kg_dia: 50,
-    dosis_max_dosis_mg: 500,
-    frecuencias: [
-      { label: 'Cada 8h (4:1)', horas: 8, dosisAlDia: 3 },
-      { label: 'Cada 12h (7:1)', horas: 12, dosisAlDia: 2 },
-    ],
-    presentaciones: [
-      { label: 'Suspensión 250/62,5 mg/5 ml', mgPorMl: 50 },
-      { label: 'Suspensión 400/57 mg/5 ml', mgPorMl: 80 },
-    ],
-    marcas: [
-      { nombre: 'Augmentin Susp. (en algunas farmacias)', farmacia: 'Cruz Verde / Salcobrand' },
-      { nombre: 'Genérico Amox/Clav 250 mg/5ml susp.', farmacia: 'Ahumada / Cruz Verde / Salcobrand' },
-    ],
-    nota: '⚠ Puede causar diarrea y RAM GI. Se dosifica en base a amoxicilina, no clavulánico.',
-    instruccion_base: 'Administrar con alimentos para reducir efectos GI',
-    duracion: '7 días',
-  },
-
-  {
-    id: 'azitromicina',
-    nombre: 'Azitromicina',
-    categoria: 'antibiotico',
-    tipo: 'Antibiótico – Macrólido (alérgicos a penicilina)',
-    esAnalgesico: false,
-    dosis_mg_kg_dia: 10,
-    dosis_max_dosis_mg: 500,
-    frecuencias: [
-      { label: 'Cada 24h', horas: 24, dosisAlDia: 1 },
-    ],
-    presentaciones: [
-      { label: 'Suspensión 200 mg/5 ml', mgPorMl: 40 },
-    ],
-    marcas: [
-      { nombre: 'Trex Susp. 200 mg/5ml', farmacia: 'Salcobrand' },
-      { nombre: 'Azitrom 200 mg/5ml', farmacia: 'Cruz Verde / Ahumada' },
-      { nombre: 'Genérico Azitromicina Susp.', farmacia: 'Ahumada / Cruz Verde / Salcobrand' },
-    ],
-    nota: 'Dosis única diaria por 3–5 días. Precaución en arritmias cardíacas. Tomar sin comida o 2h después.',
-    instruccion_base: 'Administrar 30 min antes o 2h después de comer',
-    duracion: '3–5 días',
-  },
-
-  {
-    id: 'metronidazol',
-    nombre: 'Metronidazol',
-    categoria: 'antibiotico',
-    tipo: 'Antibiótico anaerobios / pericoronaritis',
-    esAnalgesico: false,
-    dosis_mg_kg_dia: 35,
-    dosis_max_dosis_mg: 500,
-    frecuencias: [
-      { label: 'Cada 8h', horas: 8, dosisAlDia: 3 },
-      { label: 'Cada 12h', horas: 12, dosisAlDia: 2 },
-    ],
-    presentaciones: [
-      { label: 'Suspensión/Jarabe 125 mg/5 ml', mgPorMl: 25 },
-      { label: 'Comprimidos 250 mg', mgPorMl: null, esComprimido: true, mgComp: 250 },
-      { label: 'Comprimidos 500 mg', mgPorMl: null, esComprimido: true, mgComp: 500 },
-    ],
-    marcas: [
-      { nombre: 'Flagyl Jarabe', farmacia: 'Cruz Verde / Salcobrand (disponibilidad limitada)' },
-      { nombre: 'Genérico Metronidazol 250 mg comp.', farmacia: 'Ahumada / Cruz Verde / Salcobrand' },
-      { nombre: 'Genérico Metronidazol 500 mg comp.', farmacia: 'Ahumada / Cruz Verde / Salcobrand' },
-    ],
-    nota: '⚠ Jarabe de difícil disponibilidad y caro. Combinar con amoxicilina en infecciones agresivas. Contraindicado con alcohol.',
-    instruccion_base: 'Administrar con alimentos',
-    duracion: '7–10 días',
-  },
-
-  {
-    id: 'clindamicina',
-    nombre: 'Clindamicina',
-    categoria: 'antibiotico',
-    tipo: 'Antibiótico – Alérgicos a penicilina',
-    esAnalgesico: false,
-    dosis_mg_kg_dia: 20,
-    dosis_max_dosis_mg: 300,
-    frecuencias: [
-      { label: 'Cada 8h', horas: 8, dosisAlDia: 3 },
-      { label: 'Cada 6h', horas: 6, dosisAlDia: 4 },
-    ],
-    presentaciones: [
-      { label: 'Cápsulas 300 mg (escolares ≥7 años)', mgPorMl: null, esComprimido: true, mgComp: 300 },
-    ],
-    marcas: [
-      { nombre: 'Dalacin C Cápsulas 300 mg', farmacia: 'Cruz Verde / Salcobrand' },
-      { nombre: 'Genérico Clindamicina 300 mg caps.', farmacia: 'Cruz Verde / Salcobrand' },
-    ],
-    nota: '⚠ No hay suspensión en Chile. Solo escolares que puedan tragar cápsulas. Tomar con vaso lleno de agua para evitar irritación esofágica.',
-    instruccion_base: 'Con vaso lleno de agua, puede tomarse con comida',
-    duracion: '7–14 días',
-  },
-
-  // ── ANTIFÚNGICOS ──
-  {
-    id: 'miconazol',
-    nombre: 'Miconazol Gel (Daktarin)',
-    categoria: 'antifungico',
-    tipo: 'Antifúngico oral tópico – Primera elección',
-    esAnalgesico: true, // dosis fija, no por peso exacto en ml
-    esDosisEspecial: true,
-    frecuencias: [
-      { label: 'Cada 6h', horas: 6 },
-    ],
-    presentaciones: [
-      { label: 'Daktarin Gel 2% (20 mg/ml)', mgPorMl: 20 },
-    ],
-    marcas: [
-      { nombre: 'Daktarin Gel oral 2%', farmacia: 'Cruz Verde / Salcobrand (con receta)' },
-      { nombre: 'Miconazol Gel receta magistral', farmacia: 'Farmacias de magistral' },
-    ],
-    nota: 'Mantener en boca al menos 15 min antes de tragar. Continuar 48h después de desaparecer síntomas.',
-    instruccion_base: 'Aplicar sobre las lesiones y mantener en boca 15 min antes de tragar',
-    duracion: '7–15 días',
-    dosisEspecialFn: function(peso) {
-      const dosis = peso < 10 ? { mg: 25, desc: '¼ cucharita (lactante)' } : { mg: 50, desc: '½ cucharita (niño)' };
-      const ml = (dosis.mg / 20).toFixed(1);
-      return { ml, detalle: `${dosis.mg} mg = ${ml} ml · ${dosis.desc} medida · c/ 6 horas` };
-    }
-  },
-
-  {
-    id: 'nistatina',
-    nombre: 'Nistatina',
-    categoria: 'antifungico',
-    tipo: 'Antifúngico – Alternativa económica',
-    esAnalgesico: true,
-    esDosisEspecial: true,
-    frecuencias: [
-      { label: 'Cada 6h', horas: 6 },
-    ],
-    presentaciones: [
-      { label: 'Suspensión 100.000 UI/ml', mgPorMl: null, unidadesPorMl: 100000 },
-    ],
-    marcas: [
-      { nombre: 'Nistatina Susp. 100.000 UI/ml', farmacia: 'Cruz Verde / Salcobrand / Ahumada' },
-    ],
-    nota: 'Mantener en boca varios minutos antes de ingerir. Agitar bien antes de cada dosis.',
-    instruccion_base: 'Mantener en boca varios minutos antes de tragar. Agitar frasco.',
-    duracion: '7–14 días (continuar 48h post síntomas)',
-    dosisEspecialFn: function(peso) {
-      let ml, desc;
-      if (peso < 2) { ml = 1; desc = '100.000 UI (neonato)'; }
-      else if (peso < 10) { ml = 1; desc = '100.000 UI (lactante, aplicar ½ en cada lado)'; }
-      else { ml = '4–6'; desc = '400.000–600.000 UI (niño/adulto)'; }
-      return { ml: String(ml), detalle: `${desc} · c/ 6 horas` };
-    }
-  },
-
-  // ── ANTIVIRALES ──
-  {
-    id: 'aciclovir',
-    nombre: 'Aciclovir',
-    categoria: 'antiviral',
-    tipo: 'Antiviral – Herpes / GEH',
-    esAnalgesico: false,
-    dosis_mg_kg_dia: 80, // 20 mg/kg/dosis × 4 = 80 mg/kg/día
-    dosis_max_dosis_mg: 800,
-    frecuencias: [
-      { label: 'Cada 6h (×4/día)', horas: 6, dosisAlDia: 4 },
-    ],
-    presentaciones: [
-      { label: 'Suspensión 200 mg/5 ml', mgPorMl: 40 },
-      { label: 'Comprimidos 400 mg', mgPorMl: null, esComprimido: true, mgComp: 400 },
-    ],
-    marcas: [
-      { nombre: 'Zovirax Susp. 200 mg/5ml', farmacia: 'Cruz Verde / Salcobrand' },
-      { nombre: 'Genérico Aciclovir Susp.', farmacia: 'Ahumada / Cruz Verde / Salcobrand' },
-      { nombre: 'Genérico Aciclovir 400 mg comp.', farmacia: 'Ahumada / Cruz Verde / Salcobrand' },
-    ],
-    nota: 'Iniciar en pródromo (<48h de síntomas). Dosis: 20 mg/kg/dosis, 4 veces al día. Máx 800 mg/dosis.',
-    instruccion_base: 'Administrar con o sin alimentos. Beber abundante agua.',
-    duracion: '5–7 días',
-  },
+  { id:'paracetamol', nombre:'Paracetamol', categoria:'analgesico', tipo:'Analgésico / Antipirético',
+    esAnalgesico:true, dosis_mg_kg:{min:10,max:15}, dosis_max_dia_mg:2600,
+    frecuencias:[{label:'Cada 6h',horas:6},{label:'Cada 8h',horas:8}],
+    presentaciones:[
+      {label:'Jarabe 120 mg/5 ml',mgPorMl:24},{label:'Jarabe 150 mg/5 ml',mgPorMl:30},
+      {label:'Jarabe 160 mg/5 ml',mgPorMl:32},{label:'Gotas 100 mg/ml',mgPorMl:100}
+    ]},
+  { id:'ibuprofeno', nombre:'Ibuprofeno', categoria:'aine', tipo:'AINE – Antiinflamatorio / Analgésico',
+    esAnalgesico:true, dosis_mg_kg:{min:5,max:10}, dosis_max_dia_mg:40,
+    frecuencias:[{label:'Cada 6h',horas:6},{label:'Cada 8h',horas:8}],
+    presentaciones:[
+      {label:'Suspensión 100 mg/5 ml',mgPorMl:20},{label:'Suspensión 200 mg/5 ml (Forte)',mgPorMl:40},
+      {label:'Comprimidos 200 mg',esComprimido:true,mgComp:200},{label:'Comprimidos 400 mg',esComprimido:true,mgComp:400}
+    ]},
+  { id:'diclofenaco', nombre:'Diclofenaco', categoria:'aine', tipo:'AINE alternativo (>10 kg)',
+    esAnalgesico:true, dosis_mg_kg:{min:0.5,max:2},
+    frecuencias:[{label:'Cada 8h',horas:8},{label:'Cada 12h',horas:12}],
+    presentaciones:[
+      {label:'Gotas 15 mg/ml',mgPorMl:15,esGotas:true,gotasPorMl:24},
+      {label:'Comprimidos 25 mg',esComprimido:true,mgComp:25}
+    ]},
+  { id:'amoxicilina', nombre:'Amoxicilina', categoria:'antibiotico', tipo:'Antibiótico – Primera elección',
+    esAnalgesico:false, dosis_mg_kg_dia:50, dosis_max_dosis_mg:500,
+    frecuencias:[{label:'Cada 8h',horas:8,dosisAlDia:3},{label:'Cada 12h',horas:12,dosisAlDia:2}],
+    presentaciones:[
+      {label:'Suspensión 125 mg/5 ml',mgPorMl:25},{label:'Suspensión 250 mg/5 ml',mgPorMl:50},
+      {label:'Suspensión 500 mg/5 ml',mgPorMl:100}
+    ]},
+  { id:'amoxicilina_clav', nombre:'Amoxicilina + Ác. Clavulánico', categoria:'antibiotico', tipo:'Antibiótico – Segunda elección',
+    esAnalgesico:false, dosis_mg_kg_dia:50, dosis_max_dosis_mg:500,
+    frecuencias:[{label:'Cada 8h (4:1)',horas:8,dosisAlDia:3},{label:'Cada 12h (7:1)',horas:12,dosisAlDia:2}],
+    presentaciones:[
+      {label:'Suspensión 250/62,5 mg/5 ml',mgPorMl:50},{label:'Suspensión 400/57 mg/5 ml',mgPorMl:80}
+    ]},
+  { id:'azitromicina', nombre:'Azitromicina', categoria:'antibiotico', tipo:'Antibiótico – Macrólido',
+    esAnalgesico:false, dosis_mg_kg_dia:10, dosis_max_dosis_mg:500,
+    frecuencias:[{label:'Cada 24h',horas:24,dosisAlDia:1}],
+    presentaciones:[{label:'Suspensión 200 mg/5 ml',mgPorMl:40}]},
+  { id:'metronidazol', nombre:'Metronidazol', categoria:'antibiotico', tipo:'Antibiótico anaerobios',
+    esAnalgesico:false, dosis_mg_kg_dia:35, dosis_max_dosis_mg:500,
+    frecuencias:[{label:'Cada 8h',horas:8,dosisAlDia:3},{label:'Cada 12h',horas:12,dosisAlDia:2}],
+    presentaciones:[
+      {label:'Jarabe 125 mg/5 ml',mgPorMl:25},
+      {label:'Comprimidos 250 mg',esComprimido:true,mgComp:250},{label:'Comprimidos 500 mg',esComprimido:true,mgComp:500}
+    ]},
+  { id:'clindamicina', nombre:'Clindamicina', categoria:'antibiotico', tipo:'Antibiótico – Alérgicos penicilina',
+    esAnalgesico:false, dosis_mg_kg_dia:20, dosis_max_dosis_mg:300,
+    frecuencias:[{label:'Cada 8h',horas:8,dosisAlDia:3},{label:'Cada 6h',horas:6,dosisAlDia:4}],
+    presentaciones:[{label:'Cápsulas 300 mg',esComprimido:true,mgComp:300}]},
+  { id:'miconazol', nombre:'Miconazol Gel (Daktarin)', categoria:'antifungico', tipo:'Antifúngico oral – 1ª elección',
+    esDosisEspecial:true, frecuencias:[{label:'Cada 6h',horas:6}],
+    presentaciones:[{label:'Daktarin Gel 2% (20 mg/ml)',mgPorMl:20}],
+    dosisEspecialFn(p){ const mg=p<10?25:50; return{ml:(mg/20).toFixed(1),detalle:`${mg} mg · ${p<10?'¼ cucharita':'½ cucharita'}`}; }},
+  { id:'nistatina', nombre:'Nistatina', categoria:'antifungico', tipo:'Antifúngico – Alternativa económica',
+    esDosisEspecial:true, frecuencias:[{label:'Cada 6h',horas:6}],
+    presentaciones:[{label:'Suspensión 100.000 UI/ml'}],
+    dosisEspecialFn(p){ let ml,d; if(p<2){ml='1';d='100.000 UI (neonato)';}else if(p<10){ml='1';d='100.000 UI (lactante)';}else{ml='4–6';d='400.000–600.000 UI';} return{ml,detalle:d}; }},
+  { id:'aciclovir', nombre:'Aciclovir', categoria:'antiviral', tipo:'Antiviral – Herpes / GEH',
+    esAnalgesico:false, dosis_mg_kg_dia:80, dosis_max_dosis_mg:800,
+    frecuencias:[{label:'Cada 6h (×4/día)',horas:6,dosisAlDia:4}],
+    presentaciones:[
+      {label:'Suspensión 200 mg/5 ml',mgPorMl:40},{label:'Comprimidos 400 mg',esComprimido:true,mgComp:400}
+    ]},
 ];
 
-// ═══════════════════════════════════════════════════════════
-//  ESTADO
-// ═══════════════════════════════════════════════════════════
-let medSeleccionado = null;
-let presSeleccionada = null;
-let frecSeleccionada = null;
-let categoriaActual = 'todos';
+// ══════════════════════════════════════════════
+// ESTADO
+// ══════════════════════════════════════════════
+let medicamentosReceta=[], modalMed=null, modalPres=null, modalFrec=null, modalCat='todos';
+let vistaBN = false;
 
-// ═══════════════════════════════════════════════════════════
-//  RENDER GRID
-// ═══════════════════════════════════════════════════════════
-function renderGrid() {
-  const grid = document.getElementById('med-grid');
-  grid.innerHTML = '';
-  const lista = categoriaActual === 'todos'
-    ? MEDICAMENTOS
-    : MEDICAMENTOS.filter(m => m.categoria === categoriaActual);
-
-  lista.forEach(med => {
-    const div = document.createElement('div');
-    div.className = 'med-card' + (medSeleccionado && medSeleccionado.id === med.id ? ' selected' : '');
-    div.innerHTML = `
-      <div class="med-nombre">${med.nombre}</div>
-      <div class="med-tipo">${med.tipo}</div>
-    `;
-    div.onclick = () => seleccionarMed(med);
-    grid.appendChild(div);
-  });
-}
-
-function filtrarCategoria(cat) {
-  categoriaActual = cat;
-  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
-  renderGrid();
-}
-
-// ═══════════════════════════════════════════════════════════
-//  SELECCIONAR MEDICAMENTO
-// ═══════════════════════════════════════════════════════════
-function seleccionarMed(med) {
-  medSeleccionado = med;
-  presSeleccionada = null;
-  frecSeleccionada = null;
-  renderGrid();
-
-  // Presentaciones
-  const concSec = document.getElementById('conc-selector');
-  const concSel = document.getElementById('conc-select');
-  concSel.innerHTML = '';
-  med.presentaciones.forEach((p, i) => {
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = p.label;
-    concSel.appendChild(opt);
-  });
-  concSec.classList.remove('hidden');
-  presSeleccionada = med.presentaciones[0];
-
-  // Frecuencias
-  const posSec = document.getElementById('posologia-section');
-  const posGrid = document.getElementById('posologia-grid');
-  posGrid.innerHTML = '';
-  med.frecuencias.forEach((f, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'pos-btn' + (i === 0 ? ' selected' : '');
-    btn.innerHTML = `${f.label}<small>cada ${f.horas} horas</small>`;
-    btn.onclick = () => {
-      frecSeleccionada = f;
-      document.querySelectorAll('.pos-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      calcularDosis();
-    };
-    posGrid.appendChild(btn);
-  });
-  frecSeleccionada = med.frecuencias[0];
-  posSec.classList.remove('hidden');
-
-  document.getElementById('indicaciones-section').classList.remove('hidden');
-
-  calcularDosis();
-}
-
-// ═══════════════════════════════════════════════════════════
-//  CAMBIO DE PRESENTACIÓN
-// ═══════════════════════════════════════════════════════════
-document.addEventListener('change', function(e) {
-  if (e.target.id === 'conc-select' && medSeleccionado) {
-    presSeleccionada = medSeleccionado.presentaciones[parseInt(e.target.value)];
-    calcularDosis();
-  }
-});
-
-// ═══════════════════════════════════════════════════════════
-//  CÁLCULO DE DOSIS
-// ═══════════════════════════════════════════════════════════
-function calcularDosis() {
-  if (!medSeleccionado || !frecSeleccionada) return;
-  const peso = parseFloat(document.getElementById('pac-peso').value);
-  if (isNaN(peso) || peso <= 0) {
-    document.getElementById('dosis-resultado').classList.add('hidden');
-    return;
-  }
-
-  const med = medSeleccionado;
-  const pres = presSeleccionada || med.presentaciones[0];
-  const frec = frecSeleccionada;
-
-  let mlPorToma = null;
-  let detalle = '';
-  let alertaTexto = '';
-  let alertaMostrar = false;
-
-  // ── Caso especial (miconazol, nistatina) ──
-  if (med.esDosisEspecial && med.dosisEspecialFn) {
-    const r = med.dosisEspecialFn(peso);
-    mlPorToma = r.ml;
-    detalle = r.detalle;
-    mostrarDosis(med, pres, mlPorToma, detalle, '', false);
-    return;
-  }
-
-  // ── Analgésicos / AINEs: dosis por toma ──
-  if (med.esAnalgesico) {
-    const dosis_min = (med.dosis_mg_kg.min * peso).toFixed(1);
-    const dosis_max = (med.dosis_mg_kg.max * peso).toFixed(1);
-
-    if (pres.esComprimido) {
-      const comp_min = Math.ceil(parseFloat(dosis_min) / pres.mgComp);
-      const comp_max = Math.ceil(parseFloat(dosis_max) / pres.mgComp);
-      mlPorToma = comp_min === comp_max ? `${comp_min} comp.` : `${comp_min}–${comp_max} comp.`;
-      detalle = `Dosis: ${dosis_min}–${dosis_max} mg/toma`;
-    } else if (pres.esGotas) {
-      const gotas_min = Math.round(parseFloat(dosis_min) / pres.mgPorMl * pres.gotasPorMl);
-      const gotas_max = Math.round(parseFloat(dosis_max) / pres.mgPorMl * pres.gotasPorMl);
-      mlPorToma = gotas_min === gotas_max ? `${gotas_min} gotas` : `${gotas_min}–${gotas_max} gotas`;
-      detalle = `Dosis: ${dosis_min}–${dosis_max} mg/toma (${(gotas_min/pres.gotasPorMl).toFixed(2)}–${(gotas_max/pres.gotasPorMl).toFixed(2)} ml)`;
-    } else {
-      const ml_min = (parseFloat(dosis_min) / pres.mgPorMl).toFixed(1);
-      const ml_max = (parseFloat(dosis_max) / pres.mgPorMl).toFixed(1);
-      mlPorToma = ml_min === ml_max ? `${ml_min} ml` : `${ml_min}–${ml_max} ml`;
-      detalle = `Dosis: ${dosis_min}–${dosis_max} mg/toma · ${pres.label}`;
-    }
-
-    // Verificar dosis máxima diaria
-    if (med.dosis_max_dia_mg && med.id !== 'ibuprofeno') {
-      const maxDia = med.dosis_max_dia_mg;
-      if (parseFloat(dosis_max) > maxDia) {
-        alertaTexto = `⚠ Dosis máxima diaria: ${maxDia} mg/día. Ajustar.`;
-        alertaMostrar = true;
-      }
-    }
-    if (med.id === 'ibuprofeno') {
-      const max_dia = med.dosis_max_dia_mg * peso;
-      const dosisAlDia = 24 / frec.horas;
-      const max_dosis = max_dia / dosisAlDia;
-      if (parseFloat(dosis_max) > max_dosis) {
-        alertaTexto = `⚠ No exceder ${max_dia.toFixed(0)} mg/día (${med.dosis_max_dia_mg} mg/kg/día)`;
-        alertaMostrar = true;
-      }
-    }
-
-  // ── Antibióticos / Antivirales: dosis diaria ÷ número de tomas ──
+// ══════════════════════════════════════════════
+// TOGGLE COLOR/BN VISTA
+// ══════════════════════════════════════════════
+function toggleVistaColor(){
+  vistaBN = !vistaBN;
+  const hoja = document.getElementById('hoja');
+  const btn  = document.getElementById('btn-toggle-bw');
+  if(vistaBN){
+    hoja.style.filter = 'grayscale(1) contrast(1.05)';
+    btn.classList.add('bw-on');
+    btn.textContent = '🎨 Ver en color';
   } else {
-    const mg_dia_calculado = med.dosis_mg_kg_dia * peso;
-    const mg_dia = Math.min(mg_dia_calculado, med.dosis_max_dosis_mg * frec.dosisAlDia);
-    const mg_por_toma = mg_dia / frec.dosisAlDia;
-    const mg_por_toma_real = Math.min(mg_por_toma, med.dosis_max_dosis_mg);
-
-    if (pres.esComprimido) {
-      const n = Math.round(mg_por_toma_real / pres.mgComp * 2) / 2; // redondeo a 0.5
-      mlPorToma = `${n} cáps./comp.`;
-      detalle = `${mg_por_toma_real.toFixed(0)} mg/toma · ${mg_dia.toFixed(0)} mg/día`;
-    } else {
-      const ml = (mg_por_toma_real / pres.mgPorMl).toFixed(1);
-      mlPorToma = `${ml} ml`;
-      detalle = `${mg_por_toma_real.toFixed(0)} mg/toma · ${mg_dia.toFixed(0)} mg/día total · ${pres.label}`;
-    }
-
-    if (mg_por_toma > med.dosis_max_dosis_mg) {
-      alertaTexto = `⚠ Tope de dosis adulto aplicado: máx ${med.dosis_max_dosis_mg} mg/dosis`;
-      alertaMostrar = true;
-    }
+    hoja.style.filter = '';
+    btn.classList.remove('bw-on');
+    btn.textContent = '⬜ Ver en B&N';
   }
-
-  mostrarDosis(med, pres, mlPorToma, detalle, alertaTexto, alertaMostrar);
 }
 
-function mostrarDosis(med, pres, mlPorToma, detalle, alertaTexto, alertaMostrar) {
-  const resBox = document.getElementById('dosis-resultado');
-  document.getElementById('dosis-ml').textContent = mlPorToma;
-  document.getElementById('dosis-detalle').textContent = detalle;
-
-  const alBox = document.getElementById('dosis-alerta-box');
-  if (alertaMostrar) {
-    alBox.textContent = alertaTexto;
-    alBox.style.display = 'block';
-  } else {
-    alBox.style.display = 'none';
-  }
-
-  resBox.classList.remove('hidden');
-}
-
-// ═══════════════════════════════════════════════════════════
-//  GENERAR RECETA
-// ═══════════════════════════════════════════════════════════
-function generarReceta() {
-  if (!medSeleccionado || !frecSeleccionada) {
-    alert('Por favor selecciona un medicamento, peso del paciente y frecuencia.');
-    return;
-  }
-  const peso = document.getElementById('pac-peso').value;
-  if (!peso) { alert('Ingresa el peso del paciente.'); return; }
-
-  const medNombre = document.getElementById('med-nombre').value || 'Profesional';
-  const medRut = document.getElementById('med-rut').value;
-  const medDir = document.getElementById('med-direccion').value;
-  const pacNombre = document.getElementById('pac-nombre').value || 'Paciente';
-  const pacRut = document.getElementById('pac-rut').value;
-  const pacEdad = document.getElementById('pac-edad').value;
-
-  const dosis = document.getElementById('dosis-ml').textContent;
-  const detalle = document.getElementById('dosis-detalle').textContent;
-  const pres = presSeleccionada || medSeleccionado.presentaciones[0];
-  const frec = frecSeleccionada;
-  const indicaciones = document.getElementById('indicaciones').value;
-
-  // Llenar receta
-  document.getElementById('rp-clinica').textContent = medDir;
-  document.getElementById('rp-medico').innerHTML = `${medNombre}<br>${medRut}`;
-
-  document.getElementById('rp-paciente').innerHTML = `
-    <div class="dato"><strong>Paciente</strong>${pacNombre}</div>
-    <div class="dato"><strong>RUT</strong>${pacRut || '—'}</div>
-    <div class="dato"><strong>Edad / Peso</strong>${pacEdad || '—'} / ${peso} kg</div>
-  `;
-
-  document.getElementById('rp-med-nombre').textContent = medSeleccionado.nombre;
-  document.getElementById('rp-med-pres').textContent = pres.label;
-
-
-  const indicEl = document.getElementById('rp-indicaciones');
-  if (indicaciones) {
-    indicEl.textContent = indicaciones;
-    indicEl.style.display = 'block';
-  } else {
-    indicEl.style.display = 'none';
-  }
-
-  document.getElementById('rp-firma-nombre').textContent = `${medNombre} · ${medRut}`;
-  const fecha = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' });
-  document.getElementById('rp-fecha').textContent = `Santiago, ${fecha}`;
-
-  document.getElementById('receta-preview').style.display = 'block';
-  document.getElementById('receta-preview').scrollIntoView({ behavior: 'smooth' });
-}
-
-function imprimirReceta() {
+function imprimirColor(){
+  document.body.className = 'print-color';
+  document.getElementById('hoja').style.filter = '';
   window.print();
 }
+function imprimirBN(){
+  document.body.className = 'print-bw';
+  window.print();
+  setTimeout(()=>{
+    document.body.className = 'print-color';
+    if(vistaBN) document.getElementById('hoja').style.filter = 'grayscale(1) contrast(1.05)';
+  }, 600);
+}
 
-function copiarReceta() {
-  const nombre = document.getElementById('rp-med-nombre').textContent;
-  const pres = document.getElementById('rp-med-pres').textContent;
-  const indicaciones = document.getElementById('rp-indicaciones').textContent;
-  const medNombre = document.getElementById('med-nombre').value || '';
-  const fecha = document.getElementById('rp-fecha').textContent;
+// ══════════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════════
+function abrirModal(){
+  modalMed=null; modalPres=null; modalFrec=null;
+  ['modal-pres-sec','modal-frec-sec','modal-dosis-box','modal-ind-sec'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+  document.getElementById('modal-indicaciones').value='';
+  modalCat='todos';
+  document.querySelectorAll('#modal-cat-tabs .cat-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+  renderModalGrid();
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function cerrarModal(){ document.getElementById('modal-overlay').classList.remove('open'); }
+document.getElementById('modal-overlay').addEventListener('click',e=>{ if(e.target===e.currentTarget)cerrarModal(); });
 
-  const texto = [
-    '── RECETA MÉDICA · ODONTOPEDIATRÍA ──',
-    `Profesional: ${medNombre}`,
-    `Fecha: ${fecha}`,
-    `Paciente: ${document.getElementById('pac-nombre').value || ''}`,
-    '',
-    'Rp/',
-    nombre,
-    pres,
-    indicaciones ? `Indicaciones: ${indicaciones}` : '',
-  ].join('\n');
+function filtrarCat(cat,btn){
+  modalCat=cat;
+  document.querySelectorAll('#modal-cat-tabs .cat-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active'); renderModalGrid();
+}
 
-  navigator.clipboard.writeText(texto).then(() => {
-    alert('Receta copiada al portapapeles ✓');
+function renderModalGrid(){
+  const g=document.getElementById('modal-med-grid'); g.innerHTML='';
+  (modalCat==='todos'?MEDICAMENTOS:MEDICAMENTOS.filter(m=>m.categoria===modalCat)).forEach(med=>{
+    const d=document.createElement('div');
+    d.className='med-card'+(modalMed&&modalMed.id===med.id?' selected':'');
+    d.innerHTML=`<div class="mc-nombre">${med.nombre}</div><div class="mc-tipo">${med.tipo}</div>`;
+    d.onclick=()=>modalSelMed(med); g.appendChild(d);
   });
 }
 
-function cerrarReceta() {
-  document.getElementById('receta-preview').style.display = 'none';
+function modalSelMed(med){
+  modalMed=med; modalPres=med.presentaciones[0]; modalFrec=med.frecuencias[0];
+  renderModalGrid();
+  const ps=document.getElementById('modal-pres-select'); ps.innerHTML='';
+  med.presentaciones.forEach((p,i)=>{ const o=document.createElement('option');o.value=i;o.textContent=p.label;ps.appendChild(o); });
+  document.getElementById('modal-pres-sec').classList.remove('hidden');
+  const fg=document.getElementById('modal-frec-grid'); fg.innerHTML='';
+  med.frecuencias.forEach((f,i)=>{
+    const b=document.createElement('button'); b.className='pos-btn'+(i===0?' selected':'');
+    b.innerHTML=`${f.label}<small>c/${f.horas}h</small>`;
+    b.onclick=()=>{ modalFrec=f; fg.querySelectorAll('.pos-btn').forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); modalCalcDosis(); };
+    fg.appendChild(b);
+  });
+  document.getElementById('modal-frec-sec').classList.remove('hidden');
+  document.getElementById('modal-ind-sec').classList.remove('hidden');
+  modalCalcDosis();
 }
 
-function limpiarForm() {
-  medSeleccionado = null;
-  presSeleccionada = null;
-  frecSeleccionada = null;
-  document.getElementById('pac-peso').value = '';
-  document.getElementById('indicaciones').value = '';
-  document.getElementById('dosis-resultado').classList.add('hidden');
-  document.getElementById('conc-selector').classList.add('hidden');
-  document.getElementById('posologia-section').classList.add('hidden');
-  document.getElementById('indicaciones-section').classList.add('hidden');
-  cerrarReceta();
-  renderGrid();
+document.getElementById('modal-pres-select').addEventListener('change',function(){
+  if(modalMed){ modalPres=modalMed.presentaciones[parseInt(this.value)]; modalCalcDosis(); }
+});
+
+function modalCalcDosis(){
+  if(!modalMed||!modalFrec) return;
+  const peso=parseFloat(document.getElementById('pac-peso').value);
+  if(isNaN(peso)||peso<=0){ document.getElementById('modal-dosis-box').classList.add('hidden'); return; }
+  const med=modalMed, pres=modalPres||med.presentaciones[0], frec=modalFrec;
+  let val='',det='',al='',showAl=false;
+
+  if(med.esDosisEspecial&&med.dosisEspecialFn){
+    const r=med.dosisEspecialFn(peso); val=r.ml; det=r.detalle;
+  } else if(med.esAnalgesico){
+    const dn=(med.dosis_mg_kg.min*peso).toFixed(1), dx=(med.dosis_mg_kg.max*peso).toFixed(1);
+    if(pres.esComprimido){
+      const c1=Math.ceil(parseFloat(dn)/pres.mgComp),c2=Math.ceil(parseFloat(dx)/pres.mgComp);
+      val=c1===c2?`${c1} comp.`:`${c1}–${c2} comp.`; det=`${dn}–${dx} mg/toma`;
+    } else if(pres.esGotas){
+      const g1=Math.round(parseFloat(dn)/pres.mgPorMl*pres.gotasPorMl),g2=Math.round(parseFloat(dx)/pres.mgPorMl*pres.gotasPorMl);
+      val=g1===g2?`${g1} gotas`:`${g1}–${g2} gotas`; det=`${dn}–${dx} mg/toma`;
+    } else {
+      const m1=(parseFloat(dn)/pres.mgPorMl).toFixed(1),m2=(parseFloat(dx)/pres.mgPorMl).toFixed(1);
+      val=m1===m2?`${m1} ml`:`${m1}–${m2} ml`; det=`${dn}–${dx} mg/toma · ${pres.label}`;
+    }
+    if(med.id==='ibuprofeno'){ const mx=med.dosis_max_dia_mg*peso/(24/frec.horas); if(parseFloat(dx)>mx){al=`⚠ No exceder ${(med.dosis_max_dia_mg*peso).toFixed(0)} mg/día`;showAl=true;} }
+    else if(med.dosis_max_dia_mg&&parseFloat(dx)>med.dosis_max_dia_mg){al=`⚠ Máx diario: ${med.dosis_max_dia_mg} mg`;showAl=true;}
+  } else {
+    const mgDia=Math.min(med.dosis_mg_kg_dia*peso,med.dosis_max_dosis_mg*frec.dosisAlDia);
+    const mgToma=Math.min(mgDia/frec.dosisAlDia,med.dosis_max_dosis_mg);
+    if(pres.esComprimido){const n=Math.round(mgToma/pres.mgComp*2)/2;val=`${n} cáps.`;det=`${mgToma.toFixed(0)} mg/toma`;}
+    else{val=`${(mgToma/pres.mgPorMl).toFixed(1)} ml`;det=`${mgToma.toFixed(0)} mg/toma · ${mgDia.toFixed(0)} mg/día`;}
+    if((med.dosis_mg_kg_dia*peso/frec.dosisAlDia)>med.dosis_max_dosis_mg){al=`⚠ Tope adulto: ${med.dosis_max_dosis_mg} mg/dosis`;showAl=true;}
+  }
+  document.getElementById('modal-dosis-valor').textContent=val;
+  document.getElementById('modal-dosis-detalle').textContent=det;
+  const ab=document.getElementById('modal-dosis-alerta'); ab.textContent=al; ab.style.display=showAl?'block':'none';
+  document.getElementById('modal-dosis-box').classList.remove('hidden');
+  modalMed._tmp={dosis:val,detalle:det,alerta:showAl?al:''};
 }
 
-// ── INIT ──
-renderGrid();
+function agregarMed(){
+  if(!modalMed){alert('Selecciona un medicamento.');return;}
+  const peso=parseFloat(document.getElementById('pac-peso').value);
+  if(isNaN(peso)||peso<=0){alert('Ingresa el peso del paciente primero.');return;}
+  if(!modalMed._tmp){alert('Espera el cálculo de dosis.');return;}
+  medicamentosReceta.push({
+    med:modalMed, pres:modalPres||modalMed.presentaciones[0], frec:modalFrec,
+    dosis:modalMed._tmp.dosis, detalle:modalMed._tmp.detalle, alerta:modalMed._tmp.alerta,
+    indicaciones:document.getElementById('modal-indicaciones').value.trim()
+  });
+  cerrarModal(); renderMedsLista();
+}
+
+// ══════════════════════════════════════════════
+// LISTA SIDEBAR
+// ══════════════════════════════════════════════
+function renderMedsLista(){
+  const lista=document.getElementById('meds-lista'), empty=document.getElementById('meds-empty');
+  lista.innerHTML='';
+  if(!medicamentosReceta.length){ lista.appendChild(empty); empty.style.display='block'; return; }
+  medicamentosReceta.forEach((it,i)=>{
+    const d=document.createElement('div'); d.className='med-item';
+    d.innerHTML=`<div class="med-item-info">
+      <div class="med-item-nombre">${i+1}. ${it.med.nombre}</div>
+      <div class="med-item-pres">${it.pres.label}</div>
+      <span class="med-item-dosis">${it.dosis} · ${it.frec.label}</span>
+      ${it.alerta?`<div class="med-item-alerta">${it.alerta}</div>`:''}
+      ${it.indicaciones?`<div class="med-item-ind">${it.indicaciones}</div>`:''}
+    </div>
+    <button class="btn-eliminar" onclick="eliminarMed(${i})">✕</button>`;
+    lista.appendChild(d);
+  });
+}
+function eliminarMed(i){ medicamentosReceta.splice(i,1); renderMedsLista(); }
+
+// ══════════════════════════════════════════════
+// GENERAR RECETA
+// ══════════════════════════════════════════════
+function generarReceta(){
+  if(!medicamentosReceta.length){alert('Agrega al menos un medicamento.');return;}
+  const peso=document.getElementById('pac-peso').value;
+  if(!peso){alert('Ingresa el peso del paciente.');return;}
+  const mN=document.getElementById('med-nombre').value||'Profesional';
+  const mR=document.getElementById('med-rut').value;
+  const mD=document.getElementById('med-direccion').value;
+  const pN=document.getElementById('pac-nombre').value||'Paciente';
+  const pR=document.getElementById('pac-rut').value;
+  const pE=document.getElementById('pac-edad').value;
+
+  document.getElementById('rp-clinica').textContent=mD;
+  document.getElementById('rp-medico').innerHTML=`${mN}<br>${mR}`;
+  document.getElementById('rp-paciente').innerHTML=`
+    <div class="rp-dato"><strong>Paciente</strong><span>${pN}</span></div>
+    <div class="rp-dato"><strong>RUT</strong><span>${pR||'—'}</span></div>
+    <div class="rp-dato"><strong>Edad / Peso</strong><span>${pE||'—'} / ${peso} kg</span></div>`;
+
+  const ml=document.getElementById('rp-meds-lista'); ml.innerHTML='';
+  medicamentosReceta.forEach((it,i)=>{
+    const d=document.createElement('div'); d.className='rp-med-item';
+    d.innerHTML=`<div class="rp-med-num">Medicamento ${i+1}</div>
+      <div class="rp-med-nombre">${it.med.nombre}</div>
+      <div class="rp-med-pres">${it.pres.label}</div>
+      ${it.indicaciones?`<div class="rp-med-ind">${it.indicaciones}</div>`:''}`;
+    ml.appendChild(d);
+  });
+
+  document.getElementById('rp-firma').textContent=`${mN} · ${mR}`;
+  document.getElementById('rp-fecha').textContent=
+    `Santiago, ${new Date().toLocaleDateString('es-CL',{day:'2-digit',month:'long',year:'numeric'})}`;
+  document.getElementById('hoja-empty').classList.add('hidden');
+  document.getElementById('hoja-contenido').classList.remove('hidden');
+}
+
+function copiarReceta(){
+  const pN=document.getElementById('pac-nombre').value||'';
+  const peso=document.getElementById('pac-peso').value;
+  const pE=document.getElementById('pac-edad').value;
+  const mN=document.getElementById('med-nombre').value||'';
+  const fecha=new Date().toLocaleDateString('es-CL',{day:'2-digit',month:'long',year:'numeric'});
+  let t=`── RECETA MÉDICA · ODONTOPEDIATRÍA ──\nProfesional: ${mN}\n${fecha}\nPaciente: ${pN}  |  Edad: ${pE||'—'}  |  Peso: ${peso} kg\n\nRp/\n`;
+  medicamentosReceta.forEach((it,i)=>{ t+=`\n${i+1}. ${it.med.nombre}\n   ${it.pres.label}\n`; if(it.indicaciones)t+=`   ${it.indicaciones}\n`; });
+  navigator.clipboard.writeText(t).then(()=>alert('Receta copiada al portapapeles ✓'));
+}
+
+function limpiarTodo(){
+  if(medicamentosReceta.length&&!confirm('¿Limpiar todos los datos?'))return;
+  medicamentosReceta=[];
+  document.querySelectorAll('#med-nombre,#med-rut,#med-direccion,#pac-nombre,#pac-rut,#pac-edad,#pac-peso').forEach(e=>e.value='');
+  document.getElementById('hoja-empty').classList.remove('hidden');
+  document.getElementById('hoja-contenido').classList.add('hidden');
+  renderMedsLista();
+}
 </script>
-
 </body>
 </html>
